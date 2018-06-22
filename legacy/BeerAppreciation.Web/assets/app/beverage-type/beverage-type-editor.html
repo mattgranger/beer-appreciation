@@ -1,0 +1,16 @@
+﻿<div data-ng-controller="beverage-type-editor-controller as vm">
+    <div data-ng-form="beverageTypeEditorForm" id="beverageTypeEditorForm" data-name="beverageTypeEditorForm">
+        <!-- Style Name -->
+        <div class="form-group">
+            <label class="control-label" for="beverageTypeName">Name:</label>
+            <input type="text" class="form-control required" id="beverageTypeName" name="beverageTypeName" required data-ng-model="instance.name" data-ng-required="!isDisabled" />
+            <span class="error" ng-show="beverageTypeEditorForm.beverageTypeName.$dirty && beverageTypeEditorForm.beverageTypeName.$error.required">Style name is required</span>
+        </div>
+        <!-- Description -->
+        <div class="form-group">
+            <label class="control-label" for="beverageTypeDescription">Description:</label>
+            <textarea class="form-control" id="beverageTypeDescription" rows="5" name="beverageTypeDescription" data-ng-model="instance.description"></textarea>
+        </div>
+    </div>
+
+</div>

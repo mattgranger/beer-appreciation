@@ -1,0 +1,32 @@
+﻿<div data-ng-controller="beverage-selector-controller">
+    <div class="btn-group">
+        <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Assign'">Assign Existing</label>
+        <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Create'">Create New</label>
+    </div>
+    <div class="well" style="margin-top:10px;">
+        <div class="row" data-ng-show="radioModel == 'Assign'">
+            <div class="form-group">
+                <div class="col-sm-11">
+                    <input type="text" name="existingBeverage" id="existingBeverage" ng-model="asyncSelected"
+                           typeahead-min-length="2" placeholder="Search for beverage"
+                           typeahead="b as (b.name + ' - ' + b.manufacturer.name) for b in getBeverages($viewValue)"
+                           typeahead-loading="loadingBeverages" typeahead-wait-ms="100" class="form-control"
+                           typeahead-on-select="selectExistingBeverage($item, $model, $label)">
+                </div>
+                <div class="col-sm-1 text-center">
+                    <i ng-show="loadingBeverages" class="col-sm-1 glyphicon glyphicon-refresh"></i>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12" style="margin-top:10px;">
+                    <span>{{selectedBeverage.id > 0 ? "Selected: " + selectedBeverage.name : ""}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row" data-ng-show="radioModel == 'Create'">
+            <div data-ng-form="beverageDialogForm">
+                <beverage-details instance="selectedBeverage"></beverage-details>
+            </div>
+        </div>
+    </div>
+</div>

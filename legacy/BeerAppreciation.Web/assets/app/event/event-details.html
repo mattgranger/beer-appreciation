@@ -1,0 +1,84 @@
+﻿<div data-ng-controller="event-details-controller as vm">
+    <command-toolbar form="eventContainerForm"
+                     go-back="vm.goBack"
+                     can-delete="vm.canDelete"
+                     delete="vm.deleteEvent"
+                     cancel="vm.cancel"
+                     save="vm.saveChanges"></command-toolbar>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" data-ng-form="eventContainerForm">
+                <tabset>
+                    <tab>
+                        <tab-heading>
+                            <i class="glyphicon glyphicon-info-sign"></i> <span title="Event Id: {{ vm.eventInstance.id }}">Event Details</span>
+                        </tab-heading>
+                        <form id="eventDetailsForm" name="eventDetailsForm" novalidate style="margin-top:10px;">
+                            <fieldset>
+                                <!-- Drinking Club -->
+                                <div class="form-group">
+                                    <label class="control-label" for="drinkingClub">Drinking Club:</label>
+                                    <select name="drinkingClub" data-ng-model="vm.eventInstance.drinkingClubId" data-ng-options="c.id as c.name for c in vm.drinkingClubs" class="form-control required" required="required" data-ng-disabled="!vm.canEdit">
+                                        <option value="">-- Select Club --</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label" for="eventName">Event Name:</label>
+                                    <input type="text" class="form-control required" id="eventName" name="eventName" data-ng-model="vm.eventInstance.name" data-ng-disabled="!vm.canEdit" required="required" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label" for="eventDate">Event Date:</label>
+                                    <input type="text" name="eventDate" class="form-control required" datepicker-popup="{{format}}" ng-click="vm.open($event)" ng-model="vm.eventInstance.date" is-open="vm.eventDateOpened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" required="required" close-text="Close" data-ng-disabled="!vm.canEdit" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label" for="eventDate">Event Start:</label>
+                                    <timepicker data-ng-model="vm.eventInstance.date" show-meridian="true" data-ng-disabled="!vm.canEdit" data-ng-show="vm.canEdit"></timepicker>
+                                    <span class="form-control" data-ng-disabled="!vm.canEdit" data-ng-hide="vm.canEdit">{{vm.eventInstance.date | localDate}}</span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label" for="eventLocation">Event Location:</label>
+                                    <textarea class="form-control" id="eventLocation" rows="2" name="eventLocation" data-ng-model="vm.eventInstance.location" data-ng-disabled="!vm.canEdit"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label" for="eventDescription">Event Description:</label>
+                                    <textarea class="form-control" id="eventDescription" rows="5" name="eventDescription" data-ng-model="vm.eventInstance.description" data-ng-disabled="!vm.canEdit"></textarea>
+                                </div>
+
+                            </fieldset>
+                        </form>
+                    </tab>
+                    <tab>
+                        <tab-heading>
+                            <i class="glyphicon glyphicon-glass"></i> Beer List
+                        </tab-heading>
+                            
+                        <event-leaderboard event-id="vm.eventIdParameter" event-instance="vm.eventInstance" />
+
+                    </tab>
+                    <tab>
+                        <tab-heading>
+                            <i class="glyphicon glyphicon-user"></i> Attendees
+                        </tab-heading>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Appreciator Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="user in vm.eventInstance.appreciators">
+                                    <td>{{ user.drinkingName }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </tab>
+                </tabset>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+﻿<div class="container" data-ng-controller="event-leaderboard-controller">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th class="hidden-xs">Manufacturer</th>
+                <th><span class="hidden-xs">Alcohol</span> %</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="eventBeverage in eventInstance.beverages | orderBy:['-score','name']">
+                <td><a data-ng-href="{{'#/beers/' + eventBeverage.beverage.id}}">{{eventBeverage.beverage.name}}</a></td>
+                <td class="hidden-xs">{{ eventBeverage.beverage.manufacturer.name }}</td>
+                <td>{{ eventBeverage.beverage.alcoholPercent }}</td>
+                <td>{{ eventBeverage.score }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button class="btn btn-info"
+            data-ng-click="updateScores()">
+        <i class="glyphicon glyphicon-refresh"></i>Refresh
+    </button>
+</div>

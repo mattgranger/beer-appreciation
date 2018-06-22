@@ -1,0 +1,167 @@
+﻿<div class="container" data-ng-controller="beer-list-controller as vm">
+    
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#beer-nav-navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Beverages</a>
+                <a data-ng-show="vm.isReducedSize" class="navbar-brand navbar-link" style="cursor: pointer;font-size:0.95em;" data-ng-click="vm.addBeer()">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Add Beer
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="beer-nav-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li data-ng-hide="vm.isReducedSize">
+                        <a style="cursor: pointer;" data-ng-click="vm.addBeer()" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Add Beer
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="vm.toggleAdvancedSearch()" style="cursor: pointer;" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <span class="glyphicon glyphicon-cog"></span>
+                            {{ vm.showAdvancedFilters ? "Hide" : "Show" }} Advanced
+                        </a>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left" role="search" data-ng-hide="vm.isReducedSize">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" data-ng-model="vm.queryOptions.searchText" data-ng-keyup="vm.search($event)" data-ng-change="vm.searchChange($event)">
+                            <div class="input-group-addon">{{ vm.totalItems}}</div>
+                        </div>
+                    </div>
+                </form>
+                <form class="navbar-form navbar-right" role="paging">
+                    <div class="form-group">
+                        <label class="control-label">Page Size:</label>
+                        <select class="form-control" data-ng-change="vm.changePageSize()" data-ng-model="vm.queryOptions.pageSize">
+                            <option data-toggle="collapse" data-target=".navbar-collapse.in">10</option>
+                            <option data-toggle="collapse" data-target=".navbar-collapse.in">20</option>
+                            <option data-toggle="collapse" data-target=".navbar-collapse.in">50</option>
+                            <option data-toggle="collapse" data-target=".navbar-collapse.in">100</option>
+                            <option data-toggle="collapse" data-target=".navbar-collapse.in">1000</option>
+                        </select>
+                    </div>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a>Page {{ vm.queryOptions.pageIndex }} of {{ vm.totalPages }}</a></li>
+                    <li class="dropdown hidden">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+        
+    <div class="animation-flipX" data-ng-show="vm.showAdvancedFilters">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well well-sm">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="searchFor">
+                                        Search For
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </span>
+                                        <input type="text" class="form-control" ng-model="vm.queryOptions.searchText" id="searchFor" placeholder="Enter search word" data-ng-keyup="vm.search($event)" data-ng-change="vm.searchChange($event)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="beverageStyle">
+                                        Beer Style
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-star"></span>
+                                        </span>
+                                        <select name="beverageStyle" data-ng-model="vm.queryOptions.style" data-ng-change="vm.searchChange($event)"
+                                                data-ng-options="s.name for s in vm.beverageStyles" class="form-control">
+                                            <option value="">-- Select Style --</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="beverageManufacturer">
+                                        Manufacturer
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-tower"></span>
+                                        </span>
+                                        <select name="beverageManufacturer" data-ng-model="vm.queryOptions.manufacturer" data-ng-change="vm.searchChange($event)"
+                                                data-ng-options="m.name for m in vm.manufacturers" class="form-control">
+                                            <option value="">-- Select Manufacturer --</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 hidden">
+                                <button type="submit" class="btn btn-primary" id="btnSearch" data-ng-click="vm.searchChange($event)">
+                                    Search
+                                </button>
+                                <button type="button" class="btn btn-default" id="btnClose" data-ng-click="vm.showAdvancedFilters = false">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+        <div class="well">
+            <table class="table table-striped table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th style="width:200px;">Name</th>
+                        <th class="hidden-xs">Description</th>
+                        <th>Manufacturer</th>
+                        <th style="width:50px;">%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-show="vm.isLoadingBeverages">
+                        <td colspan="4">
+                            <progressbar data-ng-class="{'active':vm.isLoadingBeverages, 'progress-striped': true }" data-ng-hide="!vm.isLoadingBeverages" max="200" value="200" type="success"><i>{{ vm.loadingMessage || "Loading Beverages" }}</i></progressbar>
+                        </td>
+                    </tr>
+                    <tr data-ng-hide="vm.isLoadingBeverages" data-ng-repeat="beverage in vm.beverages" data-ng-click="vm.goToBeverage(beverage)" style="cursor: pointer;">
+                        <td><a data-ng-href="{{'#/beers/' + beverage.id}}">{{beverage.name}}</a></td>
+                        <td class="hidden-xs">{{beverage.description}}</td>
+                        <td>{{beverage.manufacturer.name}}</td>
+                        <td>{{beverage.alcoholPercent}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <pagination boundary-links="true" items-per-page="vm.queryOptions.pageSize" total-items="vm.totalItems" ng-model="vm.queryOptions.pageIndex" ng-change="vm.pageChanged()" data-ng-hide="vm.queryOptions.pageSize >= vm.totalItems"></pagination>
+        </div>
+
+</div>

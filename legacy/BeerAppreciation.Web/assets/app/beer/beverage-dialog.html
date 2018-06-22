@@ -1,0 +1,17 @@
+﻿<div class="animation-flipX">
+    <div class="modal-header animation-flipX">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" data-ng-click="cancel()">&times;</button>
+        <h4>{{title}}</h4>
+    </div>
+    <div class="modal-body">
+        
+        <div data-ng-form="beverageDialogForm">
+            <beverage-details instance="instance"></beverage-details>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="ok()" data-ng-disabled="!beverageDialogForm.$valid || beverageDialogForm.$pristine">Save</button>
+        <button class="btn btn-info" data-ng-click="cancel()">Cancel</button>
+    </div>
+</div>

@@ -1,0 +1,231 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+	position: relative;
+}
+
+.no-side-padding {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#global-progress {
+    margin: 0 !important;
+    padding:0 !important;
+    left:0;
+    width:100%;
+    top:50px;
+    height:5px;
+    position:fixed;
+    z-index:1040;
+}
+
+#ng-view {
+    padding-top:5px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+/*input,
+select,
+textarea {
+    max-width: 280px;
+}*/
+
+/* Set padding to display errors that occur during databinding */
+.padding-error {
+    padding-top: 20px;
+}
+
+@media only screen and (max-width: 767px) {
+    .nofloat {
+        float: none;
+        padding: 10px 15px;
+    }
+}
+
+footer {
+	padding-top: 10px;
+	height: 30px;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak { 
+    display: none !important; 
+}
+
+/*#ng-view {
+    &.ng-enter, &.ng-leave {
+        -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
+        -moz-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
+        -o-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
+        transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
+        display: block;
+        width: 1170px;
+        padding-left: 15px;
+        padding-right: 15px;
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+
+    &.ng-enter {
+        left: 100%;
+    }
+
+    &.ng-enter.ng-enter-active {
+        left: 0;
+    }
+
+    &.ng-leave.ng-leave-active {
+        left: -200%;
+    }
+}*/
+
+.page-splash {
+    z-index: 99999 !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #424242;
+    opacity: .7;
+    pointer-events: auto;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: opacity 0.3s linear;
+    -moz-transition: opacity 0.3s linear;
+    -o-transition: opacity 0.3s linear;
+    transition: opacity 0.3s linear;
+}
+
+.splash-introduction {
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.splash-introduction SPAN {
+    margin-left: 5px;
+}
+
+.page-splash-message {
+    text-align: center;
+    margin: 15% auto 0 auto;
+    font-size: 200%;
+    /*font-family: "Segoe UI", Arial, Helvetica, sans-serif;*/
+    font-weight: normal;
+    -webkit-text-shadow: 2px 2px #CCC;
+    text-shadow: 2px 2px #CCC;
+    text-shadow: 2px 2px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+    color: #FFF;
+    padding: 0;
+}
+
+.page-splash-message.page-splash-message-subtle {
+    margin: 37% auto 0 auto;
+    font-style: italic;
+}
+
+@import "animations.less";
+
+button {
+    i {
+        margin-right:3px;
+    }
+}
+
+.command-toolbar {
+    background:#EFEFEF;
+    padding:0;
+    height:36px;
+    margin-bottom:2px;
+
+    .navbar-nav {
+        margin-top:0 !important;
+    }
+
+    .btn {
+        i {
+            margin-right:3px;
+        }
+    }
+}
+
+.dirty-entity {
+
+}
+
+form {
+    .error { color:red;}
+    .required { border-color:#fc9696}
+    .ng-dirty.ng-invalid{ border-color: red; }
+    .ng-dirty.ng-valid{ border-color: lightgreen; }
+    .ng-pristine.ng-valid.ng-valid-required{ border-color: lightgreen; }
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (max-width: 768px) {
+    .body-content {
+        margin:0 5px 0 5px;
+        padding:0 1px 0 1px;
+        .container {
+            padding-left:5px;
+            padding-right:5px;
+            .jumbotron {
+                padding:10px;
+            }
+        }
+        .command-toolbar {
+            padding-left:10px;
+        }
+    }
+}
+
+.rating-container {
+    h4 {
+        display:inline;
+    }
+    .beverage-percent {
+        margin:0 5px;
+    }
+
+    .glyphicon {
+        color: red;
+        font-size: 1.8em;
+    }
+
+    .glyphicon:nth-child(1),
+    .glyphicon:nth-child(2) {
+        color: red;
+    }
+
+    .glyphicon:nth-child(3),
+    .glyphicon:nth-child(4),
+    .glyphicon:nth-child(5) {
+        color: #ff6a00;
+    }
+
+    .glyphicon:nth-child(6),
+    .glyphicon:nth-child(7),
+    .glyphicon:nth-child(8) {
+        color: #0094ff;
+    }
+
+    .glyphicon:nth-child(9),
+    .glyphicon:nth-child(10) {
+        color: green;
+    }
+
+    .glyphicon.glyphicon-refresh {
+        color:green;
+    }
+}

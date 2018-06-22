@@ -1,0 +1,96 @@
+﻿<div class="container" data-ng-controller="dashboard-controller as vm">
+    <div class="container">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">My Events</h3>
+                        </div>
+                        <div class="panel-body">                            
+                            <progressbar data-ng-class="{'active':vm.isLoadingUpcomingEvents, 'progress-striped': true }" data-ng-hide="!vm.isLoadingUpcomingEvents" max="200" value="200" type="success"><i>Loading Events</i></progressbar>
+                            <table class="table table-striped table-hover" data-ng-hide="vm.isLoadingUpcomingEvents">
+                                <thead>
+                                    <tr>
+                                        <th>Event</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="eventRegistration in vm.upcomingEvents" data-ng-click="vm.goToEventRegistration(eventRegistration)" style="cursor: pointer;">
+                                        <td><a data-ng-href="{{'#/profile/registration/' + eventRegistration.id}}">{{ eventRegistration.event.name }}</a></td>
+                                        <td>{{ eventRegistration.event.date | localDate }}</td>
+                                    </tr>
+                                    <tr data-ng-show="vm.upcomingEvents.length == 0">
+                                        <td colspan="2">You have not registered in any upcoming events</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Event Registration</h3>
+                        </div>
+                        <div class="panel-body">
+                            <!-- Drinking Club -->
+                            <div class="form-group row">
+                                <label class="col-sm-4 control-label" for="drinkingClub">Drinking Club:</label>
+                                <div class="col-sm-8">
+                                    <select name="drinkingClub" data-ng-model="vm.drinkingClub" data-ng-options="c.name for c in vm.drinkingClubs" data-ng-change="vm.getDrinkingClubEvents()" class="form-control">
+                                        <option value="">-- Select Club --</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- Event -->
+                            <div class="form-group row">
+                                <label class="col-sm-4 control-label" for="drinkingClubEvent">Event:</label>
+                                <div class="col-sm-8">
+                                    <select name="drinkingClubEvent" data-ng-model="vm.event" data-ng-disabled="vm.events.length == 0" 
+                                            data-ng-options="e.name for e in vm.events" class="form-control">
+                                        <option value="">-- Select Event --</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="col-sm-4">
+                                    <button class="btn btn-primary" data-ng-disabled="vm.events.length == 0 || !vm.event" data-ng-click="vm.register()">Register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Your information</h2>
+                <p>Update your profile information.</p>
+                <p data-bind="text: myHometown"></p>
+
+                <p>
+                    <a class="btn btn-default" href="/Account/Manage">Manage Profile &raquo;</a>
+                </p>
+            </div>
+
+            <div class="col-md-4">
+                <h2>Getting started</h2>
+                <p>
+                    Start your own drinking club or organise a customised event with only a few easy steps.
+                </p>
+                <p><a class="btn btn-default" href="/#/start">Get Started &raquo;</a></p>
+            </div>
+
+            <div class="col-md-4">
+                <h2>Beer Statistics</h2>
+                <p>Find out how the beers stand up against one another and which beers rate the highest.</p>
+                <p><a class="btn btn-default" href="/#/statistics">Learn more &raquo;</a></p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+﻿<style type="text/css">
+    .rating-container i {
+        font-size: 1.5em;
+    }
+
+    .rating-container .refresh-rating {
+        color: green;
+        font-size: 0.9em;
+    }
+
+    #event-registration-navbar .navbar-btn {
+        margin-left: 5px;
+    }
+
+    #small-rater {
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+</style>
+<div data-ng-controller="rate-event-controller as vm">
+
+    <div class="row command-toolbar" style="padding-left:0;">
+        <div class="col-md-12">
+            <div class="navbar" id="toolbar-navbar">
+                <div class="container no-side-padding" style="padding:2px;">
+                    <button class="btn btn-success btn-sm"
+                            data-ng-click="vm.goToRegistration()">
+                        <i class="glyphicon glyphicon-chevron-left"></i>Back
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <tabset>
+            <tab>
+                <tab-heading>
+                    <i class="glyphicon glyphicon-info-sign"></i> <span title="Event: {{vm.registrationInstance.event.name}}">Rate Event</span>
+                </tab-heading>
+                <div class="col-md-12">
+
+                    <div class="rating-container">
+
+                        <div data-ng-repeat="beverageRating in vm.registrationInstance.ratings" class="col-md-4">
+                            <div>
+                                <h4>{{ beverageRating.eventBeverage.beverage.name }}</h4><span class="beverage-percent">{{ beverageRating.eventBeverage.beverage.alcoholPercent }}%</span>
+                            </div>
+                            <span class="glyphicon glyphicon-refresh refresh-rating" aria-hidden="true" style="cursor: pointer;" data-ng-click="vm.resetScore(beverageRating)"></span>
+                            <rating ng-model="beverageRating.score" max="vm.max" readonly="beverageRating.isReadonly || !vm.isEnabled" on-hover="vm.hoveringOver(beverageRating, value)" on-leave="beverageRating.overStar = null" ng-click="vm.setRating(beverageRating)"></rating>
+                            <span class="label" style="font-size:1em;" ng-class="{'label-warning': beverageRating.percent<30, 'label-info': beverageRating.percent>=30 && beverageRating.percent<70, 'label-success': beverageRating.percent>=70}" ng-show="beverageRating.score && !beverageRating.isReadonly">{{beverageRating.total}}</span>
+                            <div class="form-group">
+                                <textarea class="form-control" id="ratingComment" rows="5" name="ratingComment" data-ng-model="beverageRating.comments" placeholder="Comments"></textarea>
+                            </div>
+                            <hr />
+                        </div>
+
+                        <div class="alert alert-info" role="alert" data-ng-show="vm.registrationInstance.ratings == 0" style="margin-top:10px;">
+                            <button type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            No beverages registered
+                        </div>
+
+                    </div>
+
+                </div>
+            </tab>
+            <tab>
+                <tab-heading>
+                    <i class="glyphicon glyphicon-list"></i> <span>Leaderboard</span>
+                </tab-heading>
+                <div class="col-md-12" style="padding-top:10px;">
+
+                    <div data-event-leaderboard="" event-id="vm.registrationInstance.eventId" event-instance="vm.registrationInstance.event"></div>
+
+                </div>
+            </tab>
+        </tabset>
+
+    </div>
+</div>

@@ -1,0 +1,31 @@
+﻿<div data-ng-controller="beverage-style-editor-controller as vm">
+    <div data-ng-form="beverageStyleEditorForm" id="beverageStyleEditorForm" data-name="beverageStyleEditorForm">
+        <!-- Style Name -->
+        <div class="form-group">
+            <label class="control-label" for="beverageStyleName">Name:</label>
+            <input type="text" class="form-control required" id="beverageStyleName" name="beverageStyleName" required data-ng-model="instance.name" data-ng-required="!isDisabled" />
+            <span class="error" ng-show="beverageStyleEditorForm.beverageStyleName.$dirty && beverageStyleEditorForm.beverageStyleName.$error.required">Style name is required</span>
+        </div>
+        <!-- Beverage Type -->
+        <div class="form-group">
+            <label class="control-label" for="beverageType">Type:</label>
+            <select name="beverageType" data-ng-model="instance.beverageTypeId" data-ng-options="t.id as t.name for t in beverageTypes" data-ng-change="onBeverageTypeChanged()" class="form-control required" required data-ng-required="!isDisabled">
+                <option value="">-- Select Type --</option>
+            </select>
+            <span class="error" ng-show="beverageStyleEditorForm.beverageType.$dirty && beverageStyleEditorForm.beverageType.$error.required">Beverage Type is required</span>
+        </div>
+        <!-- Parent Style -->
+        <div class="form-group">
+            <label class="control-label" for="beverageStyle">Parent Style:</label>
+            <select name="beverageStyle" data-ng-model="instance.parentId" data-ng-options="s.id as s.name for s in beverageStyles"
+                    class="form-control">
+                <option value="">-- Select Parent Style --</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="beverageStyleDescription">Description:</label>
+            <textarea class="form-control" id="beverageStyleDescription" rows="5" name="beverageStyleDescription" data-ng-model="instance.description"></textarea>
+        </div>
+    </div>
+
+</div>

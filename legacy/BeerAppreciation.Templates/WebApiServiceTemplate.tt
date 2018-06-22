@@ -1,0 +1,219 @@
+﻿<#@ template language="C#" #>
+namespace <#= this.ServiceNamespace #>
+{
+<#
+	if(this.IdType == "Guid")
+	{
+#>
+	using System;
+<#
+	}
+#>
+	using System.Web.Http.OData;
+	using System.Web.Http.OData.Query;
+	using <#= this.DomainEntityNamespace #>;
+
+	public interface I<#= this.TypeName #>Service
+	{
+		/// <summary>
+		/// Gets a list of all <#= this.TypeNamePlural #>.
+		/// </summary>
+		/// <param name="queryOptions">The OData query options.</param>
+		/// <param name="includes">The includes.</param>
+		/// <returns>
+		/// A list of all <#= this.TypeNamePlural #>
+		/// </returns>
+		PageResult<<#= this.TypeName #>> Get<#= this.TypeNamePlural #>(ODataQueryOptions queryOptions, string includes);
+
+		/// <summary>
+		/// Adds the <#= this.TypeName #> to the database.
+		/// </summary>
+		/// <param name="<#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #>">The <#= this.TypeName #>.</param>
+		/// <param name="updateGraph">if set to <c>true</c> any child objects of the entity will also be persisted.</param>
+		/// <returns>The identifier of the <#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #> added to database</returns>
+		<#= this.IdType #> Insert<#= this.TypeName #>(<#= this.TypeName #> <#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #>, bool updateGraph);
+
+		/// <summary>
+		/// Gets the <#= this.TypeName #> matching the specified Id
+		/// </summary>
+		/// <param name="<#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #>Id">The <#= this.TypeName #> unique identifier.</param>
+		/// <param name="includes">The includes.</param>
+		/// <returns>
+		/// The <#= this.TypeName #> matching the id
+		/// </returns>
+		<#= this.TypeName #> Get<#= this.TypeName #>(<#= this.IdType #> <#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #>Id, string includes);
+
+		/// <summary>
+		/// Updates the specified <#= this.TypeName #>.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		/// <param name="<#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #>">The <#= this.TypeName #>.</param>
+		/// <param name="updateGraph">if set to <c>true</c> any child objects of the entity will also be persisted.</param>
+		void Update<#= this.TypeName #>(<#= this.IdType #> id, <#= this.TypeName #> <#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #>, bool updateGraph);
+
+		/// <summary>
+		/// Deletes the specified <#= this.TypeName #>.
+		/// </summary>
+		/// <param name="id">The <#= this.TypeName #> identifier.</param>
+		void Delete<#= this.TypeName #>(<#= this.IdType #> id);   
+	}
+}
+
+namespace <#= this.ServiceNamespace #>
+{
+	using System;
+	using System.Web.Http.OData;
+	using System.Web.Http.OData.Query;
+	using BeerAppreciation.Data;
+    using BeerAppreciation.Data.EF.Extensions;
+    using BeerAppreciation.Data.EF.UnitOfWork;
+	using <#= this.RepositoryNamespace #>;
+	using <#= this.DomainEntityNamespace #>;
+
+	public class <#= this.TypeName #>Service : I<#= this.TypeName #>Service
+	{
+
+		/// <summary>
+        /// The unit of work factory
+        /// </summary>
+        private readonly IUnitOfWorkInterceptorFactory<<#= this.DbContextName #>> unitOfWorkFactory;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="<#= this.TypeName #>Service" /> class.
+        /// </summary>
+        /// <param name="unitOfWorkFactory"></param>
+        public <#= this.TypeName #>Service(IUnitOfWorkInterceptorFactory<<#= this.DbContextName #>> unitOfWorkFactory)
+        {
+            this.unitOfWorkFactory = unitOfWorkFactory;
+        }
+
+		/// <summary>
+		/// Gets a list of all <#= this.TypeName #>s.
+		/// </summary>
+		/// <param name="queryOptions">The OData query options.</param>
+		/// <param name="includes">The includes.</param>
+		/// <returns>
+		/// A list of all <#= this.TypeName #>s
+		/// </returns>
+		public PageResult<<#= this.TypeName #>> Get<#= this.TypeName #>s(ODataQueryOptions queryOptions, string includes)
+		{
+			using (var unitOfWork = this.unitOfWorkFactory.Create())
+            {
+                IEntityRepository<<#= this.TypeName #>> entityRepository = unitOfWork.GetRepository<<#= this.TypeName #>, <#= this.IdType #>>();
+
+                // Query the generic repository using any odata query options and includes
+                return entityRepository.GetList(queryOptions, includes);
+            };
+		}
+
+
+		/// <summary>
+		/// Adds the <#= this.TypeName #> to the database.
+		/// </summary>
+		/// <param name="<#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #>">The <#= this.TypeName #>.</param>
+		/// <param name="updateGraph">if set to <c>true</c> any child objects of the entity will also be persisted.</param>
+		/// <returns>The identifier of the <#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #> added to database</returns>
+		public <#= this.IdType #> Insert<#= this.TypeName #>(<#= this.TypeName #> <#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #>, bool updateGraph)
+		{
+			using (var unitOfWork = this.unitOfWorkFactory.Create())
+            {
+                // Get the entity repository
+                IEntityRepository<<#= this.TypeName #>> entityRepository = unitOfWork.GetRepository<<#= this.TypeName #>, <#= this.IdType #>>();
+
+                // Insert the entity
+                if (updateGraph)
+                {
+                    // Update any entities in the graph
+                    entityRepository.InsertOrUpdateGraph(<#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #>);
+                }
+                else
+                {
+                    // Update just the root entity
+                    entityRepository.Insert(<#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #>);
+                }
+
+                // Persist the changes and return Id
+                return unitOfWork.Save().GetInsertedEntityKey<<#= this.IdType #>>("<#= this.TypeName #>s");
+            }
+		}
+
+		/// <summary>
+		/// Gets the <#= this.TypeName #> matching the specified Id
+		/// </summary>
+		/// <param name="<#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #>Id">The <#= this.TypeName #> unique identifier.</param>
+		/// <param name="includes">The includes.</param>
+		/// <returns>
+		/// The <#= this.TypeName #> matching the id
+		/// </returns>
+		public <#= this.TypeName #> Get<#= this.TypeName #>(<#= this.IdType #> <#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #>Id, string includes)
+		{
+			using (var unitOfWork = this.unitOfWorkFactory.Create())
+            {
+                // Get the entity repository
+                IEntityRepository<<#= this.TypeName #>> entityRepository = unitOfWork.GetRepository<<#= this.TypeName #>, <#= this.IdType #>>();
+
+                // GetChangedActionTypes the matching entity
+                return entityRepository.GetSingle(t => t.Id == <#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #>Id, includes.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+            }
+		}
+
+		/// <summary>
+		/// Updates the specified <#= this.TypeName #>.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		/// <param name="<#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #>">The <#= this.TypeName #>.</param>
+		/// <param name="updateGraph">if set to <c>true</c> any child objects of the entity will also be persisted.</param>
+		public void Update<#= this.TypeName #>(<#= this.IdType #> id, <#= this.TypeName #> <#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #>, bool updateGraph)
+		{
+			using (var unitOfWork = this.unitOfWorkFactory.Create())
+            {
+                // Get the entity repository
+                IEntityRepository<<#= this.TypeName #>> entityRepository = unitOfWork.GetRepository<<#= this.TypeName #>, <#= this.IdType #>>();
+
+                // Update the entity
+                if (updateGraph)
+                {
+                    entityRepository.InsertOrUpdateGraph(<#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #>);
+                }
+                else
+                {
+                    entityRepository.Update(<#= this.TypeName[0].ToString().ToLower() + this.TypeName.Substring(1) #>);
+                }
+
+                // Persist the changes
+                unitOfWork.Save();
+            }
+		}
+
+		/// <summary>
+		/// Deletes the specified <#= this.TypeName #>.
+		/// </summary>
+		/// <param name="id">The <#= this.TypeName #> identifier.</param>
+		public void Delete<#= this.TypeName #>(<#= this.IdType #> id)
+		{
+			using (var unitOfWork = this.unitOfWorkFactory.Create())
+            {
+                // Get the entity repository
+                IEntityRepository<<#= this.TypeName #>> entityRepository = unitOfWork.GetRepository<<#= this.TypeName #>, <#= this.IdType #>>();
+
+                // Insert the entity
+                entityRepository.Delete(id);
+
+                // Persist the changes
+                unitOfWork.Save();
+            }
+		}   
+	}
+}
+
+<#+
+	string ControllerBaseURL = "api/accounts";
+	string WebApiNamespace = "EventSauce.Web.Controllers";
+	string ServiceNamespace = "EventSauce.Core.Services";
+	string DomainEntityNamespace = "EventSauce.Domain";
+	string RepositoryNamespace = "EventSauce.Core.Repositories";
+	string DbContextName = "EventSauceContext";
+	string TypeName = "AccountUser";
+	string TypeNamePlural = "AccountUsers";
+	string IdType = "string";
+#>

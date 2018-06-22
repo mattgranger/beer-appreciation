@@ -1,0 +1,84 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerAppreciation.Core", "BeerAppreciation.Core\BeerAppreciation.Core.csproj", "{93167D45-FB19-477D-8AFF-0035117FB07B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerAppreciation.Web", "BeerAppreciation.Web\BeerAppreciation.Web.csproj", "{4CB62763-2DCA-4A39-B75F-D69782C41263}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerAppreciation.Web.Tests", "BeerAppreciation.Web.Tests\BeerAppreciation.Web.Tests.csproj", "{D2D8D1CE-0EA9-4C42-A3F3-8A9515B8F6C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerAppreciation.Data", "BeerAppreciation.Data\BeerAppreciation.Data.csproj", "{574E7D0F-7C88-489F-A2BB-73B105A84807}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerAppreciation.Domain", "BeerAppreciation.Domain\BeerAppreciation.Domain.csproj", "{ADC69073-723E-4D0B-A575-EF5E5C9DAD08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerAppreciation.Data.EF", "BeerAppreciation.Data.EF\BeerAppreciation.Data.EF.csproj", "{05109231-1AC8-47D8-9D84-DD47D97EB427}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerAppreciation.Core.Tests", "BeerAppreciation.Core.Tests\BeerAppreciation.Core.Tests.csproj", "{D5E857D5-97EE-4721-AD16-CB0677B86E3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerAppreciation.Data.Tests", "BeerAppreciation.Data.Tests\BeerAppreciation.Data.Tests.csproj", "{1F5DB4D0-5090-4D69-9388-52CEDD359688}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A6A4D973-7F55-42BD-B9CC-C5BE053F09BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerAppreciation.Data.IntegrationTests", "BeerAppreciation.Data.IntegrationTests\BeerAppreciation.Data.IntegrationTests.csproj", "{F539BF19-A3D5-4FA5-BC5B-0698B423BB68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerAppreciation.SignalR", "BeerAppreciation.SignalR\BeerAppreciation.SignalR.csproj", "{664EBB74-74F2-48BC-A901-FB9566A3809B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerAppreciation.Templates", "BeerAppreciation.Templates\BeerAppreciation.Templates.csproj", "{974E28A2-2431-4F72-92B4-2F8046F1426F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93167D45-FB19-477D-8AFF-0035117FB07B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93167D45-FB19-477D-8AFF-0035117FB07B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93167D45-FB19-477D-8AFF-0035117FB07B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93167D45-FB19-477D-8AFF-0035117FB07B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CB62763-2DCA-4A39-B75F-D69782C41263}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CB62763-2DCA-4A39-B75F-D69782C41263}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CB62763-2DCA-4A39-B75F-D69782C41263}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CB62763-2DCA-4A39-B75F-D69782C41263}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2D8D1CE-0EA9-4C42-A3F3-8A9515B8F6C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2D8D1CE-0EA9-4C42-A3F3-8A9515B8F6C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2D8D1CE-0EA9-4C42-A3F3-8A9515B8F6C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{574E7D0F-7C88-489F-A2BB-73B105A84807}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{574E7D0F-7C88-489F-A2BB-73B105A84807}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{574E7D0F-7C88-489F-A2BB-73B105A84807}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{574E7D0F-7C88-489F-A2BB-73B105A84807}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADC69073-723E-4D0B-A575-EF5E5C9DAD08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADC69073-723E-4D0B-A575-EF5E5C9DAD08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADC69073-723E-4D0B-A575-EF5E5C9DAD08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADC69073-723E-4D0B-A575-EF5E5C9DAD08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05109231-1AC8-47D8-9D84-DD47D97EB427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05109231-1AC8-47D8-9D84-DD47D97EB427}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05109231-1AC8-47D8-9D84-DD47D97EB427}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05109231-1AC8-47D8-9D84-DD47D97EB427}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5E857D5-97EE-4721-AD16-CB0677B86E3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5E857D5-97EE-4721-AD16-CB0677B86E3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5E857D5-97EE-4721-AD16-CB0677B86E3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F5DB4D0-5090-4D69-9388-52CEDD359688}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F5DB4D0-5090-4D69-9388-52CEDD359688}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F5DB4D0-5090-4D69-9388-52CEDD359688}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F539BF19-A3D5-4FA5-BC5B-0698B423BB68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F539BF19-A3D5-4FA5-BC5B-0698B423BB68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F539BF19-A3D5-4FA5-BC5B-0698B423BB68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{664EBB74-74F2-48BC-A901-FB9566A3809B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{664EBB74-74F2-48BC-A901-FB9566A3809B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{664EBB74-74F2-48BC-A901-FB9566A3809B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{664EBB74-74F2-48BC-A901-FB9566A3809B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{974E28A2-2431-4F72-92B4-2F8046F1426F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{974E28A2-2431-4F72-92B4-2F8046F1426F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D2D8D1CE-0EA9-4C42-A3F3-8A9515B8F6C3} = {A6A4D973-7F55-42BD-B9CC-C5BE053F09BA}
+		{D5E857D5-97EE-4721-AD16-CB0677B86E3F} = {A6A4D973-7F55-42BD-B9CC-C5BE053F09BA}
+		{1F5DB4D0-5090-4D69-9388-52CEDD359688} = {A6A4D973-7F55-42BD-B9CC-C5BE053F09BA}
+		{F539BF19-A3D5-4FA5-BC5B-0698B423BB68} = {A6A4D973-7F55-42BD-B9CC-C5BE053F09BA}
+	EndGlobalSection
+EndGlobal

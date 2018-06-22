@@ -1,0 +1,11 @@
+﻿<div class="animation-flipX">
+    <div class="modal-body">
+        <div data-ng-form="beverageDialogForm">
+            <beverage-selector selected-beverage="selectedBeverage"></beverage-selector>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="ok()" data-ng-disabled="selectedBeverage.id <= 0 && (!beverageDialogForm.$valid || beverageDialogForm.$pristine)">Save</button>
+        <button class="btn btn-info" data-ng-click="cancel()">Cancel</button>
+    </div>
+</div>

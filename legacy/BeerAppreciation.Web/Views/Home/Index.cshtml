@@ -1,0 +1,40 @@
+﻿@using System.Configuration
+@using BeerAppreciation.Core.Extensions
+<div data-ng-controller="shell as vs">
+    <div data-ng-show="vs.isBusy" class="page-splash shuffle-animation">
+        <div data-ba-spinner="vs.spinnerOptions"></div>
+        <div class="page-splash-message page-splash-message-subtle ng-cloak" style="display:none;">{{vs.busyMessage}}</div>
+    </div>
+    <progressbar id="global-progress" data-ng-class="{progress:true,'progress-striped':vs.inprogress,active:vs.isBusy || vs.inprogress}" type="{{vs.progressType}}" value="100"></progressbar>
+    <div id="ng-view" data-ng-view></div>
+</div>
+
+@section Scripts
+{
+    <script src="~/Scripts/jquery.signalR-2.1.2.min.js"></script>
+    <script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/toastr")
+    @Scripts.Render("~/bundles/spin")
+    @Scripts.Render("~/bundles/angular-ui")
+    @Scripts.Render("~/bundles/app")
+    <script type="text/javascript">
+
+        // bootstrap appSettings
+
+        var appSettings = {
+            appreciator: {
+                id: '@User.UserId()',
+                drinkingName: '@User.DrinkingName()'
+            },
+            traceLevel: @ConfigurationManager.AppSettings["ng-TraceLevel"],
+            pageSize: 20,
+            dateFormat: 'dd-MMM-yyyy hh:mm a'
+        };
+
+        angular.module("common").factory('appSettings', function() {
+            return appSettings;
+        });
+
+    </script>
+}

@@ -1,0 +1,19 @@
+﻿<div class="animation-flipX">
+
+    <div class="modal-header animation-flipX">
+
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" data-ng-click="cancel()">&times;</button>
+        <h3>{{title}}</h3>
+    </div>
+    <div class="modal-body">
+
+        <form class="form-horizontal" role="form" name="beverageStyleForm" novalidate>
+            <beverage-style-editor instance="instance" beverage-style-form="beverageStyleForm"></beverage-style-editor>
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="ok()" data-ng-disabled="beverageStyleForm.$invalid || beverageStyleForm.$pristine">Save</button>
+        <button class="btn btn-info" data-ng-click="cancel()">Cancel</button>
+    </div>
+</div>

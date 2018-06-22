@@ -1,0 +1,43 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+namespace <#= this.RepositoryNamespace #>
+{
+<#
+	if(this.IdType == "Guid")
+	{
+#>
+	using System;
+<#
+	}
+#>
+    using <#= this.DomainEntityNamespace #>;
+    using INX.Core.DataAccess;
+    using INX.Core.DataAccess.UnitOfWork;
+
+    public class <#= this.TypeName #>EntityRepository : BaseEntityRepository<<#= this.TypeName #>, <#= this.IdType #>, <#= this.DbContextName #>>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="<#= this.TypeName #>EntityRepository" /> class.
+        /// This overload allows the context to be passed in for use within a Unit of Work
+        /// </summary>
+        /// <param name="dbContext">The database context.</param>
+        /// <param name="unitOfWork">The unit of work.</param>
+        public <#= this.TypeName #>EntityRepository(<#= this.DbContextName #> dbContext, IUnitOfWork<<#= this.DbContextName #>> unitOfWork)
+            : base(dbContext, unitOfWork, false)
+        {
+        }
+    }
+}
+
+<#+
+	string RepositoryNamespace = "EventSauce.Core.Repositories";
+	string DbContextName = "EventSauceContext";
+	string DomainEntityNamespace = "EventSauce.Domain.Common";
+	string TypeName = "AddressType";
+	string TypeNamePlural = "AddressTypes";
+	string IdType = "int";
+#>

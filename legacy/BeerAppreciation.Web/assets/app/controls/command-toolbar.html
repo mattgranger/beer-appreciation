@@ -1,0 +1,35 @@
+﻿<div class="row command-toolbar">
+    <div class="col-md-12">
+        <div class="navbar" id="toolbar-navbar">
+            <div class="container no-side-padding" style="padding:2px;">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <button class="btn btn-primary btn-sm"
+                                data-ng-click="goBack()">
+                            <i class="glyphicon glyphicon-circle-arrow-left"></i>Back
+                        </button>
+                        <button class="btn btn-warning btn-sm"
+                                data-ng-click="cancel()"
+                                data-ng-disabled="!form.$dirty">
+                            <i class="glyphicon glyphicon-ban-circle"></i>Cancel
+                        </button>
+                        <button class="btn btn-success btn-sm"
+                                data-ng-click="save()"
+                                data-ng-disabled="!form.$valid || form.$pristine">
+                            <i class="glyphicon glyphicon-save"></i>Save
+                        </button>
+                        <button class="btn btn-danger btn-sm"
+                                data-ng-disabled="!canDelete"
+                                data-ng-click="delete()">
+                            <i class="glyphicon glyphicon-trash"></i>Delete
+                        </button>
+                        <span data-ng-show="form.$dirty" title="Changes detected..."
+                              class="fader-animation ng-hide dirty-entity">
+                            <i class="glyphicon glyphicon-asterisk"></i>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

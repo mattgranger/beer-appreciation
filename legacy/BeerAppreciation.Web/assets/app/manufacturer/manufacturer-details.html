@@ -1,0 +1,41 @@
+﻿<div data-ng-controller="manufacturer-details-controller as vm">
+    <command-toolbar go-back="vm.goBack"
+                     can-delete="vm.canDelete"
+                     delete="vm.delete"
+                     cancel="vm.cancel"
+                     save="vm.saveChanges"
+                     form="manufacturerContainerForm"></command-toolbar>
+    <div class="container">
+        <div class="row">
+            <form class="col-md-12" id="manufacturerContainerForm" name="manufacturerContainerForm" novalidate>
+                <tabset>
+                    <tab>
+                        <tab-heading>
+                            <i class="glyphicon glyphicon-info-sign"></i> <span title="Manufacturer Id: {{ vm.manufacturerInstance.id }}">Manufacturer Details</span>
+                        </tab-heading>
+                        <manufacturer-editor instance="vm.manufacturerInstance"></manufacturer-editor>
+                    </tab>
+                    <tab>
+                        <tab-heading>
+                            <i class="glyphicon glyphicon-glass"></i> Beer List
+                        </tab-heading>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th><span class="hidden-xs">Alcohol</span> %</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="beverage in vm.manufacturerInstance.beverages | orderBy:['name']">
+                                    <td>{{ beverage.name }}</td>
+                                    <td>{{ beverage.alcoholPercent }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </tab>
+                </tabset>
+            </form>
+        </div>
+    </div>
+</div>

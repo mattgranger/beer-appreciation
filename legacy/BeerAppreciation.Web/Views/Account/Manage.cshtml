@@ -1,0 +1,56 @@
+﻿@using BeerAppreciation.Web.Models;
+@using Microsoft.AspNet.Identity;
+@model UserDetailsViewModel
+@{
+    ViewBag.Title = "Manage Account";
+}
+<div class="container">
+    <h2>@ViewBag.Title.</h2>
+
+    <p class="text-success">@ViewBag.StatusMessage</p>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <p>You're logged in as <strong>@User.Identity.GetUserName()</strong>.</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("UpdateDetails", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4>Change Drinking Name</h4>
+                <hr />
+                @Html.HiddenFor(m => m.UserId)
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DrinkingName, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.DrinkingName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Update Drinking Name" class="btn btn-primary" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @if (ViewBag.HasLocalPassword)
+            {
+                @Html.Partial("_ChangePasswordPartial", new ManageUserViewModel())
+            }
+            else
+            {
+                @Html.Partial("_SetPasswordPartial", new ManageUserViewModel())
+            }
+        </div>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</div>

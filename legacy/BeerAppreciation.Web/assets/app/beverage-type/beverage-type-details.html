@@ -1,0 +1,41 @@
+﻿<div data-ng-controller="beverage-type-details-controller as vm">
+    <command-toolbar go-back="vm.goBack"
+                     can-delete="vm.canDelete"
+                     delete="vm.delete"
+                     cancel="vm.cancel"
+                     save="vm.saveChanges"
+                     form="beverageTypeContainerForm"></command-toolbar>
+    <div class="container">
+        <div class="row">
+            <form class="col-md-12" id="beverageTypeContainerForm" name="beverageTypeContainerForm" novalidate>
+                <tabset>
+                    <tab>
+                        <tab-heading>
+                            <i class="glyphicon glyphicon-info-sign"></i> <span title="Type Id: {{ vm.beverageTypeInstance.id }}">Beverage Type Details</span>
+                        </tab-heading>
+                        <beverage-type-editor instance="vm.beverageTypeInstance"></beverage-type-editor>
+                    </tab>
+                    <tab>
+                        <tab-heading>
+                            <i class="glyphicon glyphicon-glass"></i> Style List
+                        </tab-heading>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Parent</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="style in vm.beverageTypeInstance.styles | orderBy:['name']">
+                                    <td>{{ style.name }}</td>
+                                    <td>{{ style.parent.name }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </tab>
+                </tabset>
+            </form>
+        </div>
+    </div>
+</div>
