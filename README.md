@@ -14,6 +14,8 @@ The project has aged somewhat, and after being fucked over by the AngularJS v An
 
 A few partakers in our regular beer drinking events have expressed an interest in using the application as a training tool for re-engineering it as a React.js application with a micro service back end.  Sounds like a great way to learn new technology and improve the beer app.
 
+The (loose) plan is to re-implement the app as a react spa using the Visual Studio react + redux (.Net Core 2.1) template, and update it to the latest npm package versions.  The aim is to achieve (or exceed) the same level of functionality that the original application offered.
+
 ### How do I get set up?
 
 * Clone the repository
