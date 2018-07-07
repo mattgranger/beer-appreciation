@@ -8,7 +8,9 @@
     {
         public void Configure(EntityTypeBuilder<Beverage> builder)
         {
-            builder.ToTable("Beverage", "Catalog");
+            builder.ToTable("Beverage");
+
+            builder.HasKey(b => b.Id);
 
             builder.Property(b => b.Id)
                 .ForSqlServerUseSequenceHiLo("beverage_hilo")
@@ -22,6 +24,7 @@
                 .IsRequired(false);
 
             builder.Property(b => b.AlcoholPercent)
+                .HasColumnType("decimal(5, 2)")
                 .IsRequired(false);
 
             builder.Property(b => b.Volume)
@@ -30,18 +33,6 @@
             builder.Property(b => b.Url)
                 .IsRequired(false)
                 .HasMaxLength(200);
-
-            builder.HasOne(b => b.BeverageStyle)
-                .WithMany()
-                .HasForeignKey(b => b.BeverageStyleId);
-
-            builder.HasOne(b => b.BeverageType)
-                .WithMany()
-                .HasForeignKey(b => b.BeverageTypeId);
-
-            builder.HasOne(b => b.Manufacturer)
-                .WithMany()
-                .HasForeignKey(b => b.ManufacturerId);
         }
     }
 }

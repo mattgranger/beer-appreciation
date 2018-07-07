@@ -8,7 +8,7 @@
     {
         public void Configure(EntityTypeBuilder<BeverageStyle> builder)
         {
-            builder.ToTable("BeverageStyle", "Catalog");
+            builder.ToTable("BeverageStyle");
 
             builder.HasKey(bt => bt.Id);
 
@@ -19,14 +19,6 @@
             builder.Property(bt => bt.Name)
                 .IsRequired()
                 .HasMaxLength(100);
-
-            builder.HasOne(b => b.Parent)
-                .WithMany()
-                .HasForeignKey(b => b.ParentId);
-
-            builder.HasOne(b => b.BeverageType)
-                .WithMany()
-                .HasForeignKey(b => b.BeverageTypeId);
         }
     }
 }

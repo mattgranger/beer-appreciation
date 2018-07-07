@@ -1,8 +1,13 @@
 version: '3.4'
 
 services:
+  sql.data:
+    image: microsoft/mssql-server-linux:2017-latest
+
   catalog.api:
-    image: ${DOCKER_REGISTRY}catalogapi
+    image: beerappreciation/catalog.api:${TAG:-latest}
     build:
       context: .
       dockerfile: src/Services/Catalog/Catalog.API/Dockerfile
+    depends_on:
+      - sql.data

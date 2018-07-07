@@ -1,8 +1,29 @@
 version: '3.4'
 
 services:
+  sql.data:
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "5433:1433"    # Important: In a production environment your should remove the external port
+
   catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - ConnectionString=${BEERAPPRECIATION_AZURE_CATALOG_DB:-Server=sql.data;Database=BeerAppreciation.Services.CatalogDb;User Id=sa;Password=Pass@word}
+      - PicBaseUrl=${BEERAPPRECIATION_AZURE_STORAGE_CATALOG_URL:-http://localhost:5202/api/v1/c/catalog/items/[0]/pic/}   #Local: You need to open your local dev-machine firewall at range 5100-5110.  
+      - EventBusConnection=${BEERAPPRECIATION_AZURE_SERVICE_BUS:-rabbitmq}
+      - EventBusUserName=${BEERAPPRECIATION_SERVICE_BUS_USERNAME}
+      - EventBusPassword=${BEERAPPRECIATION_SERVICE_BUS_PASSWORD}         
+      - AzureStorageAccountName=${BEERAPPRECIATION_AZURE_STORAGE_CATALOG_NAME}
+      - AzureStorageAccountKey=${BEERAPPRECIATION_AZURE_STORAGE_CATALOG_KEY}
+      - UseCustomisationData=True
+      - AzureServiceBusEnabled=False
+      - AzureStorageEnabled=False
+      - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
+      - OrchestratorType=${ORCHESTRATOR_TYPE}
     ports:
-      - "80"
+      - "5101:80"   # Important: In a production environment your should remove the external port (5101) kept here for microservice debugging purposes. 
+                    # The API Gateway redirects and access through the internal port (80).

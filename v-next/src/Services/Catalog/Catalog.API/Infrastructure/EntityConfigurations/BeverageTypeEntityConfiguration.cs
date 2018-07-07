@@ -8,7 +8,7 @@
     {
         public void Configure(EntityTypeBuilder<BeverageType> builder)
         {
-            builder.ToTable("BeverageType", "Catalog");
+            builder.ToTable("BeverageType");
 
             builder.HasKey(bt => bt.Id);
 

@@ -1,5 +1,7 @@
 ﻿namespace Catalog.API.Domain
 {
+    using System.Collections.Generic;
+
     public class BeverageStyle
     {
         public int Id { get; set; }
@@ -15,5 +17,7 @@
         public int BeverageTypeId { get; set; }
 
         public BeverageType BeverageType { get; set; }
+
+        public ICollection<BeverageStyle> BeverageStyles { get; set; }
     }
 }

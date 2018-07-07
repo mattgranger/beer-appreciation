@@ -1,0 +1,42 @@
+﻿Name,Description,BeverageTypeName
+Golden Ale,NULL,Beer
+Dark Ale,NULL,Beer
+Ale,NULL,Beer
+Pale Ale,NULL,Beer
+Pilsner,NULL,Beer
+Amber Ale,NULL,Beer
+Lager,NULL,Beer
+Golden Lager,NULL,Beer
+Black Lager,NULL,Beer
+Brown Ale,NULL,Beer
+Bavarian,NULL,Beer
+German Maibock,NULL,Beer
+Malt,NULL,Beer
+Weizen Bock,NULL,Beer
+IPA,NULL,Beer
+Tripel,NULL,Beer
+Munich Dunkel Lager ,NULL,Beer
+Belgian White (Witbier),NULL,Beer
+Stout,NULL,Beer
+Schwarzbier,NULL,Beer
+Wheat Beer,NULL,Beer
+Altbier,NULL,Beer
+Raspberry Ale,NULL,Beer
+HeffeWeizen,NULL,Beer
+Saison,NULL,Beer
+Apricot Wheat Ale,NULL,Beer
+Pear Cider,NULL,Cider
+Apple,NULL,Cider
+Elderflower,NULL,Cider
+Apple with Pear,Apple with Pear,Cider
+Cerveza,Is nice!,Beer
+Draft,NULL,Beer
+Red Ale,It's an ale.  It's red.,Beer
+India Black Ale,NULL,Beer
+Red IPA,NULL,Beer
+Ginger Beer,NULL,Beer
+American Pale Ale,NULL,Beer
+Belgian Strong Ale,This seemed to be the only thing to describe the blonde Ale La Chouffe.,Beer
+Strong Ale,NULL,Beer
+Kolsch,NULL,Beer
+Kentish Ale,NULL,Beer
