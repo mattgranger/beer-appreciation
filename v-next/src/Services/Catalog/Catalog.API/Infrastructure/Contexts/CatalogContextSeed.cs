@@ -16,7 +16,7 @@
 
     public class CatalogContextSeed
     {
-        public const string SetupDataFilePath = "Infrastructure\\Setup";
+        public const string SetupDataFilePath = "Infrastructure/Setup";
         public const string ColumnRegexPattern = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
 
         public async Task SeedAsync(CatalogContext context, IHostingEnvironment env, IOptions<CatalogSettings> settings, ILogger<CatalogContextSeed> logger)
@@ -183,7 +183,7 @@
             string[] csvheaders = null;
             try
             {
-                string[] requiredHeaders = { "name", "description", "alcoholpercent", "volume", "url", "beveragetypename", "beveragestylename", "manufacturername" };
+                string[] requiredHeaders = { "name", "description", "alcoholpercent", "volume", "url", "beveragestylename", "beveragetypename", "manufacturername" };
                 csvheaders = this.GetHeaders(csvFileBeverageStyles, requiredHeaders );
             }
             catch (Exception ex)
@@ -198,7 +198,7 @@
             return File.ReadAllLines(csvFileBeverageStyles)
                 .Skip(1) // skip header row
                 .Select(row => Regex.Split(row, ColumnRegexPattern) )
-                .SelectTry(column => this.CreateBeverage(column, csvheaders, beverageTypeIdLookup, beverageStyleIdLookup, manufacturerIdLookup))
+                .SelectTry(column => this.CreateBeverage(column, csvheaders, beverageTypeIdLookup, beverageStyleIdLookup, manufacturerIdLookup, logger))
                 .OnCaughtException(ex => { logger.LogError(ex.Message); return null; })
                 .Where(x => x != null);
         }
@@ -223,7 +223,7 @@
             return beverageStyle;
         }
 
-        private Beverage CreateBeverage(string[] column, string[] headers, Dictionary<String, int> beverageTypeIdLookup, Dictionary<String, int> beverageStyleIdLookup, Dictionary<String, int> manufacturerIdLookup)
+        private Beverage CreateBeverage(string[] column, string[] headers, Dictionary<String, int> beverageTypeIdLookup, Dictionary<String, int> beverageStyleIdLookup, Dictionary<String, int> manufacturerIdLookup, ILogger<CatalogContextSeed> logger)
         {
             GuardColumnHeaders(column, headers);
 
@@ -249,6 +249,7 @@
             {
                 Description = column[Array.IndexOf(headers, "description")].Trim('"').Trim(),
                 Name = column[Array.IndexOf(headers, "name")].Trim('"').Trim(),
+                Url = column[Array.IndexOf(headers, "url")].Trim('"').Trim(),
                 BeverageTypeId = beverageTypeIdLookup[beverageTypeName],
                 BeverageStyleId = beverageStyleIdLookup[beverageStyleName],
                 ManufacturerId = manufacturerIdLookup[manufacturerName]
@@ -266,7 +267,7 @@
                     }
                     else
                     {
-                        throw new Exception($"alcoholPercent={alcoholPercentString} is not a valid decimal");
+                        logger.LogError($"alcoholPercent={alcoholPercentString} is not a valid decimal");
                     }
                 }
             }
@@ -279,11 +280,11 @@
                 {
                     if (int.TryParse(volumeString, out int volume))
                     {
-                        beverage.AlcoholPercent = volume;
+                        beverage.Volume = volume;
                     }
                     else
                     {
-                        throw new Exception($"volume={volume} is not a valid integer");
+                        logger.LogError($"volume={volume} is not a valid integer");
                     }
                 }
             }

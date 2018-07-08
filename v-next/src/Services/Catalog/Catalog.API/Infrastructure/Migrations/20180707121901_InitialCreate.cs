@@ -81,7 +81,7 @@ namespace Catalog.API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
                     Description = table.Column<string>(nullable: true),
                     AlcoholPercent = table.Column<decimal>(type: "decimal(5, 2)", nullable: true),
                     Volume = table.Column<int>(nullable: true),

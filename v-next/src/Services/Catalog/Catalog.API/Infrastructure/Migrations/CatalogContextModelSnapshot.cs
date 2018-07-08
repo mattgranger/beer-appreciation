@@ -43,7 +43,7 @@ namespace Catalog.API.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50);
+                        .HasMaxLength(100);
 
                     b.Property<string>("Url")
                         .HasMaxLength(200);

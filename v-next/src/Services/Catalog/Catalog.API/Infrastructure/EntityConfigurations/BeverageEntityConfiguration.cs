@@ -18,7 +18,7 @@
 
             builder.Property(b => b.Name)
                 .IsRequired()
-                .HasMaxLength(50);
+                .HasMaxLength(100);
 
             builder.Property(b => b.Description)
                 .IsRequired(false);
