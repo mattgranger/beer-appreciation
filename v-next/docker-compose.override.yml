@@ -8,6 +8,11 @@ services:
     ports:
       - "5433:1433"    # Important: In a production environment your should remove the external port
 
+  rabbitmq:
+    ports:
+      - "15672:15672"  # Important: In a production environment your should remove the external port
+      - "5672:5672"    # Important: In a production environment your should remove the external port
+
   catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -27,3 +32,27 @@ services:
     ports:
       - "5101:80"   # Important: In a production environment your should remove the external port (5101) kept here for microservice debugging purposes. 
                     # The API Gateway redirects and access through the internal port (80).
+
+  identity.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - SpaClient=http://${BEERAPPRECIATION_EXTERNAL_DNS_NAME_OR_IP}:5104
+      - XamarinCallback=http://${BEERAPPRECIATION_PROD_EXTERNAL_DNS_NAME_OR_IP}:5105/xamarincallback      #localhost do not work for UWP login, so we have to use "external" IP always
+      - ConnectionString=${BEERAPPRECIATION_AZURE_IDENTITY_DB:-Server=sql.data;Database=BeerAppreciation.Services.IdentityDb;User Id=sa;Password=Pass@word} 
+      - MvcClient=http://${BEERAPPRECIATION_EXTERNAL_DNS_NAME_OR_IP}:5100              #Local: You need to open your local dev-machine firewall at range 5100-5110. 
+      - MobileShoppingAggClient=http://${BEERAPPRECIATION_EXTERNAL_DNS_NAME_OR_IP}:5120
+      - WebShoppingAggClient=http://${BEERAPPRECIATION_EXTERNAL_DNS_NAME_OR_IP}:5121
+      - UseCustomizationData=True  
+      - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
+      - OrchestratorType=${ORCHESTRATOR_TYPE}
+    ports:
+      - "5105:80"   
+
+
+  eventmanagement.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
