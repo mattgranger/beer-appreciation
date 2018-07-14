@@ -56,3 +56,10 @@ services:
     ports:
       - "80"
 
+
+  beverage.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+

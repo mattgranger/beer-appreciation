@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RootNamespace>BeerAppreciation.Core.WebApi</RootNamespace>
+  </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0" />
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.1" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="2.4.0" />
+        <PackageReference Include="RabbitMQ.Client" Version="5.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\EventBus\EventBus.Domain\EventBus.Domain.csproj" />
+      <ProjectReference Include="..\..\EventBus\EventBusRabbitMQ\EventBusRabbitMQ.csproj" />
+      <ProjectReference Include="..\..\EventBus\EventBusServiceBus\EventBusServiceBus.csproj" />
+    </ItemGroup>
+
+</Project>

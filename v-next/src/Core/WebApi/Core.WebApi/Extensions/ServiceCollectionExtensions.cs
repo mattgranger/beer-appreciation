@@ -1,6 +1,5 @@
-﻿namespace Catalog.API.Extensions
+﻿namespace BeerAppreciation.Core.WebApi.Extensions
 {
-    using Infrastructure;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
@@ -8,9 +7,8 @@
 
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCustomOptions(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddApiBehaviorOptions(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<CatalogSettings>(configuration);
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = context =>

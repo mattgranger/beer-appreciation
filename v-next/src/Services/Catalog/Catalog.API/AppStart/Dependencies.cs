@@ -122,7 +122,7 @@
                         retryCount = int.Parse(configuration["EventBusRetryCount"]);
                     }
 
-                    return new EventBusRabbitMq(rabbitMQPersistentConnection, logger, iLifetimeScope, eventBusSubcriptionsManager, subscriptionClientName, retryCount);
+                    return new EventBusRabbitMq(rabbitMQPersistentConnection, logger, iLifetimeScope, eventBusSubcriptionsManager, ExchangeTypes.Direct, subscriptionClientName, retryCount);
                 });
             }
 

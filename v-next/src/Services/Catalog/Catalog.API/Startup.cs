@@ -4,7 +4,6 @@
     using AppStart;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
-    using Extensions;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
@@ -45,6 +44,19 @@
 
             app.UseMvc();
             SwaggerConfig.Configure(app, env);
+        }
+    }
+
+    public static class StartupConfiguration
+    {
+        public static IServiceCollection AddCustomOptions(this IServiceCollection services, IConfiguration configuration)
+        {
+            return services;
+        }
+        
+        public static IServiceCollection AddCustomServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            return services;
         }
     }
 }

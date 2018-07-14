@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Catalog.API.Extensions
+﻿namespace Core.Shared.Extensions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public static class LinqSelectExtensions
     {
         public static IEnumerable<SelectTryResult<TSource, TResult>> SelectTry<TSource, TResult>(this IEnumerable<TSource> enumerable, Func<TSource, TResult> selector)
@@ -37,9 +37,9 @@ namespace Catalog.API.Extensions
         {
             internal SelectTryResult(TSource source, TResult result, Exception exception)
             {
-                Source = source;
-                Result = result;
-                CaughtException = exception;
+                this.Source = source;
+                this.Result = result;
+                this.CaughtException = exception;
             }
 
             public TSource Source { get; private set; }

@@ -1,4 +1,4 @@
-﻿namespace Catalog.API.Infrastructure.Contexts
+﻿namespace BeerAppreciation.Beverage.Data.Contexts
 {
     using System;
     using System.Collections.Generic;
@@ -7,28 +7,24 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
-    using BeerAppreciation.Core.WebApi.Extensions;
     using Core.Shared.Extensions;
     using Domain;
-    using Polly;
-    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Options;
+    using Polly;
 
-    public class CatalogContextSeed
+    public class BeverageContextSeed
     {
-        public const string SetupDataFilePath = "Infrastructure/Setup";
+        public const string SetupDataFilePath = "Setup";
         public const string ColumnRegexPattern = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
 
-        public async Task SeedAsync(CatalogContext context, IHostingEnvironment env, IOptions<CatalogSettings> settings, ILogger<CatalogContextSeed> logger)
+        public async Task SeedAsync(BeverageContext context, IHostingEnvironment env, ILogger<BeverageContextSeed> logger)
         {
-            var policy = this.CreatePolicy(logger, nameof(CatalogContextSeed));
+            var policy = this.CreatePolicy(logger, nameof(BeverageContextSeed));
 
             await policy.ExecuteAsync(async () =>
             {
-                var useCustomisationData = settings.Value.UseCustomisationData;
                 var contentRootPath = env.ContentRootPath;
-                var picturePath = env.WebRootPath;
 
                 if (!context.Manufacturers.Any())
                 {
@@ -56,7 +52,7 @@
             });
         }
 
-        private IEnumerable<Manufacturer> GetManufacturersFromFile(string contentRootPath, ILogger<CatalogContextSeed> logger)
+        private IEnumerable<Manufacturer> GetManufacturersFromFile(string contentRootPath, ILogger<BeverageContextSeed> logger)
         {
             string csvFileManufacturers = Path.Combine(contentRootPath, SetupDataFilePath, "Manufacturers.csv");
 
@@ -101,7 +97,7 @@
             }
         }
 
-        private IEnumerable<BeverageType> GetBeverageTypesFromFile(string contentRootPath, ILogger<CatalogContextSeed> logger)
+        private IEnumerable<BeverageType> GetBeverageTypesFromFile(string contentRootPath, ILogger<BeverageContextSeed> logger)
         {
             string csvFileCatalogTypes = Path.Combine(contentRootPath, SetupDataFilePath, "BeverageTypes.csv");
 
@@ -152,7 +148,7 @@
             };
         }
 
-        private IEnumerable<BeverageStyle> GetBeverageStylesFromFile(string contentRootPath, CatalogContext context, ILogger<CatalogContextSeed> logger)
+        private IEnumerable<BeverageStyle> GetBeverageStylesFromFile(string contentRootPath, BeverageContext context, ILogger<BeverageContextSeed> logger)
         {
             string csvFileBeverageStyles = Path.Combine(contentRootPath, SetupDataFilePath, "BeverageStyles.csv");
 
@@ -177,7 +173,7 @@
                         .Where(x => x != null);
         }
 
-        private IEnumerable<Beverage> GetBeveragesFromFile(string contentRootPath, CatalogContext context, ILogger<CatalogContextSeed> logger)
+        private IEnumerable<Beverage> GetBeveragesFromFile(string contentRootPath, BeverageContext context, ILogger<BeverageContextSeed> logger)
         {
             string csvFileBeverageStyles = Path.Combine(contentRootPath, SetupDataFilePath, "Beverages.csv");
 
@@ -224,7 +220,7 @@
             return beverageStyle;
         }
 
-        private Beverage CreateBeverage(string[] column, string[] headers, Dictionary<String, int> beverageTypeIdLookup, Dictionary<String, int> beverageStyleIdLookup, Dictionary<String, int> manufacturerIdLookup, ILogger<CatalogContextSeed> logger)
+        private Beverage CreateBeverage(string[] column, string[] headers, Dictionary<String, int> beverageTypeIdLookup, Dictionary<String, int> beverageStyleIdLookup, Dictionary<String, int> manufacturerIdLookup, ILogger<BeverageContextSeed> logger)
         {
             GuardColumnHeaders(column, headers);
 
@@ -323,7 +319,7 @@
             return csvheaders;
         }
 
-        private Policy CreatePolicy(ILogger<CatalogContextSeed> logger, string prefix,int retries = 3)
+        private Policy CreatePolicy(ILogger<BeverageContextSeed> logger, string prefix,int retries = 3)
         {
             return Policy.Handle<SqlException>().
                 WaitAndRetryAsync(
