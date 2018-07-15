@@ -7,7 +7,6 @@
     using Core.WebApi.Startup;
     using Data.Contexts;
     using Data.Extensions;
-    using Infrastructure;
     using Infrastructure.AutofacModules;
     using Installers;
     using Microsoft.AspNetCore.Builder;
@@ -34,7 +33,6 @@
                 .AddIntegrationServices(this.Configuration)
                 .AddEventBus(this.Configuration, this.Configuration["SubscriptionClientName"])
                 .AddSwagger("Beverage API", "v1", "The Beer Appreciation Beverage Microservice API.")
-                .AddUnitOfWork<BeverageContext>()
                 .AddBeverageDependencies(this.Configuration);
 
             var container = new ContainerBuilder();
@@ -63,15 +61,6 @@
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-        }
-    }
-
-    public static class StartupConfiguration
-    {
-        public static IServiceCollection AddCustomOptions(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.Configure<BeverageApiSettings>(configuration);
-            return services;
         }
     }
 }

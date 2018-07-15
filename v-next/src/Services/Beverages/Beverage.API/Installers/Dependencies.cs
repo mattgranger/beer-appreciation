@@ -7,6 +7,7 @@
     using Domain.Services;
     using global::Core.Shared.Data.Repositories;
     using global::Core.Shared.Data.Services;
+    using Infrastructure;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Diagnostics;
     using Microsoft.Extensions.Configuration;
@@ -15,6 +16,12 @@
 
     public static class Dependencies
     {
+        public static IServiceCollection AddCustomOptions(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<BeverageApiSettings>(configuration);
+            return services;
+        }
+
         public static IServiceCollection AddBeverageDependencies(this IServiceCollection services, IConfiguration configuration)
         {
             services
@@ -27,7 +34,9 @@
 
         public static IServiceCollection ConfigureDbContexts(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<BeverageContext>(options =>
+            services
+                .AddUnitOfWork<BeverageContext>()
+                .AddDbContext<BeverageContext>(options =>
             {
                 options.UseSqlServer(configuration["ConnectionString"],
                     sqlServerOptionsAction: sqlOptions =>

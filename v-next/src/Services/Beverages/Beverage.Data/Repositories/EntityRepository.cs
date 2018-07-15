@@ -60,7 +60,7 @@
 
         private async Task<T> GetEntityById(TKey id)
         {
-            return await this.repository.FindAsync(new[] {id});
+            return await this.repository.GetFirstOrDefaultAsync(x => x, x => x.Id.Equals(id));
         }
     }
 }
