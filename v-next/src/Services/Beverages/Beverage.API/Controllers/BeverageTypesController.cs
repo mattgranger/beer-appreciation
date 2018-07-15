@@ -24,7 +24,7 @@
         [HttpGet]
         [ProducesResponseType(typeof(PagedResultModel<BeverageType>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(IEnumerable<BeverageType>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Get([FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 0)
+        public async Task<IActionResult> Get([FromQuery]int pageIndex = 0, [FromQuery]int pageSize = 10)
         {
             var pagedList = await this.beverageTypeService.GetPagedList(pageIndex, pageSize);
 
@@ -59,7 +59,7 @@
         [ProducesResponseType(typeof(IEnumerable<BeverageStyle>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetBeverageStyles(int id)
         {
-            var beverageType = await this.beverageTypeService.GetById(id, "BeverageStyles");
+            var beverageType = await this.beverageTypeService.GetById(id);
             if (beverageType == null)
             {
                 return this.NotFound();

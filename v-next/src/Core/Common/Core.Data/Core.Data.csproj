@@ -6,4 +6,8 @@
     <AssemblyName>BeerAppreciation.Core.Data</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Core.Shared\Core.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

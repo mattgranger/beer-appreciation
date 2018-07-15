@@ -1,9 +1,9 @@
 ﻿namespace BeerAppreciation.Beverage.Domain
 {
-    public class Beverage
-    {
-        public int Id { get; set; }
+    using global::Core.Shared.Domain;
 
+    public class Beverage : BaseEntity<int>
+    {
         public string Name { get; set; }
 
         public string Description { get; set; }

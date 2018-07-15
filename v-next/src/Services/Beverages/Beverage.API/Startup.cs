@@ -6,8 +6,10 @@
     using Core.EventBus.Abstractions;
     using Core.WebApi.Startup;
     using Data.Contexts;
+    using Data.Extensions;
     using Infrastructure;
     using Infrastructure.AutofacModules;
+    using Installers;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -32,12 +34,15 @@
                 .AddIntegrationServices(this.Configuration)
                 .AddEventBus(this.Configuration, this.Configuration["SubscriptionClientName"])
                 .AddSwagger("Beverage API", "v1", "The Beer Appreciation Beverage Microservice API.")
-                .AddUnitOfWork<BeverageContext>();
+                .AddUnitOfWork<BeverageContext>()
+                .AddBeverageDependencies(this.Configuration);
 
             var container = new ContainerBuilder();
             container.Populate(services);
 
-            container.RegisterModule(new ApplicationModule());
+            container
+                .RegisterBeverageDataModule()
+                .RegisterModule(new ApplicationModule());
 
             return new AutofacServiceProvider(container.Build());
         }
@@ -49,23 +54,8 @@
                 app.UseDeveloperExceptionPage();
             }
 
-            var pathBase = this.Configuration["PATH_BASE"];
-
-            if (!string.IsNullOrEmpty(pathBase))
-            {
-                loggerFactory.CreateLogger("init").LogDebug($"Using PATH BASE '{pathBase}'");
-                app.UsePathBase(pathBase);
-            }
-
-            app.UseCors("CorsPolicy");
-
-            app.UseMvcWithDefaultRoute();
-
-            app.UseSwagger()
-                .UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Catalog.API V1");
-                });
+            app.UseMvc();
+            app.ConfigureSwaggerWithUi();
 
             this.ConfigureEventBus(app);
         }

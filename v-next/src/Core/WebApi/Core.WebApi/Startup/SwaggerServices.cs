@@ -1,7 +1,6 @@
 ﻿namespace BeerAppreciation.Core.WebApi.Startup
 {
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.DependencyInjection;
 
     public static class SwaggerServices
@@ -23,11 +22,15 @@
             return services;
         }
 
-        public static void Configure(
-            IApplicationBuilder app, 
-            IHostingEnvironment env, 
-            string url = "/swagger/v1/swagger.json", 
-            string endpointName = "API V1")
+        public static void ConfigureSwagger(
+            this IApplicationBuilder app)
+        {
+            app.UseSwagger();
+        }
+
+        public static void ConfigureSwaggerWithUi(this IApplicationBuilder app, 
+            string endpointName = "API V1",
+            string url = "/swagger/v1/swagger.json")
         {
             app.UseSwagger()
                 .UseSwaggerUI(c =>

@@ -1,19 +1,11 @@
 ﻿namespace BeerAppreciation.Beverage.Domain.Services
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Repositories;
+    using Core.Shared.Data.Repositories;
 
-    public class BeverageService : IBeverageService
+    public class BeverageService : EntityService<Beverage, int>, IBeverageService
     {
-        public BeverageService(IBeverageRepository beverageRepository)
+        public BeverageService(IEntityRepository<Beverage, int> repository) : base(repository)
         {
-            
-        }
-
-        public Task<IList<Beverage>> GetBeverages()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

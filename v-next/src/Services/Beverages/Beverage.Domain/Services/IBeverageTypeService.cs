@@ -1,10 +1,8 @@
 ﻿namespace BeerAppreciation.Beverage.Domain.Services
 {
-    using System.Threading.Tasks;
-    using Core.Data.Repositories;
+    using Core.Shared.Data.Services;
 
-    public interface IBeverageTypeService  : IGenericRepository<Beverage, int>
+    public interface IBeverageTypeService : IEntityService<BeverageType, int>
     {
-        Task<BeverageType> GetById(int id, string includes = "");
     }
 }

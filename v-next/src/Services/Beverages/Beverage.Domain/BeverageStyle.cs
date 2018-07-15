@@ -1,11 +1,10 @@
 ﻿namespace BeerAppreciation.Beverage.Domain
 {
     using System.Collections.Generic;
+    using global::Core.Shared.Domain;
 
-    public class BeverageStyle
+    public class BeverageStyle : BaseEntity<int>
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }

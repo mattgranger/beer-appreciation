@@ -6,26 +6,26 @@
     using Core.WebApi.Extensions;
     using Core.WebApi.Models;
     using Domain;
-    using Domain.Repositories;
+    using Domain.Services;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("api/v1/[controller]")]
     public class BeveragesController : ControllerBase
     {
-        private readonly IBeverageRepository beverageRepository;
+        private readonly IBeverageService beverageService;
 
-        public BeveragesController(IBeverageRepository beverageRepository)
+        public BeveragesController(IBeverageService beverageService)
         {
-            this.beverageRepository = beverageRepository;
+            this.beverageService = beverageService;
         }
 
         // GET api/v1/[controller]/?pageSize=3&pageIndex=10]
         [HttpGet]
         [ProducesResponseType(typeof(PagedResultModel<Beverage>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(IEnumerable<Beverage>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Get([FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 0)
+        public async Task<IActionResult> Get([FromQuery]int pageIndex = 0, [FromQuery]int pageSize = 10)
         {
-            var pagedList = await this.beverageRepository.GetPagedList(pageIndex, pageSize);
+            var pagedList = await this.beverageService.GetPagedList(pageIndex, pageSize);
 
             return this.Ok(pagedList.ToPagedResultModel());
         }
@@ -42,7 +42,7 @@
                 return this.BadRequest();
             }
 
-            var beverage = await this.beverageRepository.GetById(id);
+            var beverage = await this.beverageService.GetById(id);
 
             if (beverage != null)
             {
@@ -57,7 +57,7 @@
         [ProducesResponseType((int)HttpStatusCode.Created)]
         public async Task<IActionResult> Update([FromBody]Beverage beverage)
         {
-            var beverageItem = await this.beverageRepository.GetById(beverage.Id);
+            var beverageItem = await this.beverageService.GetById(beverage.Id);
 
             if (beverageItem == null)
             {
@@ -69,7 +69,7 @@
 
             // Update current beverage
             beverageItem = beverage;
-            await this.beverageRepository.Update(beverageItem);
+            await this.beverageService.Update(beverageItem);
 
             if (raiseBeverageNameChangedEvent) // Save product's data and publish integration event through the Event Bus if price has changed
             {
@@ -84,7 +84,7 @@
             }
             else // Just save the updated product because the Product's Price hasn't changed.
             {
-                await this.beverageRepository.SaveChanges();
+                await this.beverageService.SaveChanges();
             }
 
             return this.CreatedAtAction(nameof(GetById), new { id = beverage.Id }, null);
@@ -107,9 +107,9 @@
                 Url = beverage.Url
             };
 
-            await this.beverageRepository.Insert(item);
+            await this.beverageService.Insert(item);
 
-            await this.beverageRepository.SaveChanges();
+            await this.beverageService.SaveChanges();
 
             return this.CreatedAtAction(nameof(GetById), new { id = item.Id }, null);
         }
@@ -120,16 +120,16 @@
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         public async Task<IActionResult> Delete(int id)
         {
-            var beverage = await this.beverageRepository.GetById(id);
+            var beverage = await this.beverageService.GetById(id);
 
             if (beverage == null)
             {
                 return this.NotFound();
             }
 
-            await this.beverageRepository.Delete(id);
+            await this.beverageService.Delete(id);
 
-            await this.beverageRepository.SaveChanges();
+            await this.beverageService.SaveChanges();
 
             return this.NoContent();
         }

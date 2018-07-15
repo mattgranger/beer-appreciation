@@ -1,15 +1,15 @@
-﻿namespace BeerAppreciation.Core.Data.Repositories
+﻿namespace Core.Shared.Data.Repositories
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Paging;
 
-    public interface IGenericRepository<T, in TKey> : IUnitOfWork
+    public interface IEntityRepository<T, TKey> : IUnitOfWork
     {
-        Task<IList<T>> Get();
+        Task<IList<T>> GetList();
         Task<IPagedList<T>> GetPagedList(int pageIndex = 0, int pageSize = 100);
         Task<T> GetById(TKey id);
-        Task Insert(T entity);
+        Task<TKey> Insert(T entity);
         Task Update(T entity);
         Task Delete(TKey id);
     }

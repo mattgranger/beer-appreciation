@@ -1,8 +1,8 @@
 ﻿namespace BeerAppreciation.Beverage.Domain.Repositories
 {
-    using Core.Data.Repositories;
+    using Core.Shared.Data.Repositories;
 
-    public interface IBeverageRepository : IGenericRepository<Beverage, int>
+    public interface IBeverageRepository : IEntityRepository<Beverage, int>
     {
     }
 }

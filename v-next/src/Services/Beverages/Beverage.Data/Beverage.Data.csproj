@@ -6,7 +6,30 @@
     <AssemblyName>BeerAppreciation.Beverage.Data</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Setup\Beverages.csv" />
+    <None Remove="Setup\BeverageStyles.csv" />
+    <None Remove="Setup\BeverageTypes.csv" />
+    <None Remove="Setup\Manufacturers.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Setup\Beverages.csv">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setup\BeverageStyles.csv">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setup\BeverageTypes.csv">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setup\Manufacturers.csv">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
     <ItemGroup>
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.1" />
         <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="1.1.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.0" />
@@ -18,7 +41,6 @@
     </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\Common\Core.Data\Core.Data.csproj" />
     <ProjectReference Include="..\..\..\Core\Common\Core.Shared\Core.Shared.csproj" />
     <ProjectReference Include="..\Beverage.Domain\Beverage.Domain.csproj" />
   </ItemGroup>

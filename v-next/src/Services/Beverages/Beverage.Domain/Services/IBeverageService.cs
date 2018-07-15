@@ -1,10 +1,8 @@
 ﻿namespace BeerAppreciation.Beverage.Domain.Services
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
+    using Core.Shared.Data.Services;
 
-    public interface IBeverageService
+    public interface IBeverageService : IEntityService<Beverage, int>
     {
-        Task<IList<Beverage>> GetBeverages();
     }
 }

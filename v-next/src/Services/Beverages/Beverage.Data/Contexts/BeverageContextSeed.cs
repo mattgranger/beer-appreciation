@@ -9,14 +9,15 @@
     using System.Threading.Tasks;
     using Domain;
     using global::Core.Shared.Extensions;
+    using global::Core.Shared.Helpers;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Logging;
     using Polly;
 
     public class BeverageContextSeed
     {
-        public const string SetupDataFilePath = "Setup";
         public const string ColumnRegexPattern = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
+        public const string BeverageDataNameSpace = "BeerAppreciation.Beverage.Data.Setup";
 
         public async Task SeedAsync(BeverageContext context, IHostingEnvironment env, ILogger<BeverageContextSeed> logger)
         {
@@ -24,37 +25,35 @@
 
             await policy.ExecuteAsync(async () =>
             {
-                var contentRootPath = env.ContentRootPath;
-
                 if (!context.Manufacturers.Any())
                 {
-                    await context.Manufacturers.AddRangeAsync(this.GetManufacturersFromFile(contentRootPath, logger));
+                    await context.Manufacturers.AddRangeAsync(this.GetManufacturersFromFile(logger));
                     await context.SaveChangesAsync();
                 }
 
                 if (!context.BeverageTypes.Any())
                 {
-                    await context.BeverageTypes.AddRangeAsync(this.GetBeverageTypesFromFile(contentRootPath, logger));
+                    await context.BeverageTypes.AddRangeAsync(this.GetBeverageTypesFromFile(logger));
                     await context.SaveChangesAsync();
                 }
 
                 if (!context.BeverageStyles.Any())
                 {
-                    await context.BeverageStyles.AddRangeAsync(this.GetBeverageStylesFromFile(contentRootPath, context, logger));
+                    await context.BeverageStyles.AddRangeAsync(this.GetBeverageStylesFromFile(context, logger));
                     await context.SaveChangesAsync();
                 }
 
                 if (!context.Beverages.Any())
                 {
-                    await context.Beverages.AddRangeAsync(this.GetBeveragesFromFile(contentRootPath, context, logger));
+                    await context.Beverages.AddRangeAsync(this.GetBeveragesFromFile(context, logger));
                     await context.SaveChangesAsync();
                 }
             });
         }
 
-        private IEnumerable<Manufacturer> GetManufacturersFromFile(string contentRootPath, ILogger<BeverageContextSeed> logger)
+        private IEnumerable<Manufacturer> GetManufacturersFromFile(ILogger<BeverageContextSeed> logger)
         {
-            string csvFileManufacturers = Path.Combine(contentRootPath, SetupDataFilePath, "Manufacturers.csv");
+            string csvFileManufacturers = ResourceHelper.GetManifestResourceAsString($"{BeverageDataNameSpace}.Manufacturers.csv");
 
             string[] csvheaders = null;
             try
@@ -67,7 +66,7 @@
                 logger.LogError(ex.Message);
             }
 
-            return File.ReadAllLines(csvFileManufacturers)
+            return csvFileManufacturers.SplitCsvRows()
                                         .Skip(1) // skip header row
                                         .Select(row => Regex.Split(row, ColumnRegexPattern) )
                                         .SelectTry(column => this.CreateManufacturer(column, csvheaders))
@@ -97,11 +96,11 @@
             }
         }
 
-        private IEnumerable<BeverageType> GetBeverageTypesFromFile(string contentRootPath, ILogger<BeverageContextSeed> logger)
+        private IEnumerable<BeverageType> GetBeverageTypesFromFile(ILogger<BeverageContextSeed> logger)
         {
-            string csvFileCatalogTypes = Path.Combine(contentRootPath, SetupDataFilePath, "BeverageTypes.csv");
+            string csvFileBeverageTypes = ResourceHelper.GetManifestResourceAsString($"{BeverageDataNameSpace}.BeverageTypes.csv");
 
-            if (!File.Exists(csvFileCatalogTypes))
+            if (csvFileBeverageTypes == null)
             {
                 return this.GetPreconfiguredBeverageTypes();
             }
@@ -110,14 +109,14 @@
             try
             {
                 string[] requiredHeaders = { "name", "description" };
-                csvheaders = this.GetHeaders( csvFileCatalogTypes, requiredHeaders );
+                csvheaders = this.GetHeaders( csvFileBeverageTypes, requiredHeaders );
             }
             catch (Exception ex)
             {
                 logger.LogError(ex.Message);
             }
 
-            return File.ReadAllLines(csvFileCatalogTypes)
+            return csvFileBeverageTypes.SplitCsvRows()
                                         .Skip(1) // skip header row
                                         .Select(row => Regex.Split(row, ColumnRegexPattern) )
                                         .SelectTry(column => this.CreateBeverageType(column, csvheaders))
@@ -148,9 +147,9 @@
             };
         }
 
-        private IEnumerable<BeverageStyle> GetBeverageStylesFromFile(string contentRootPath, BeverageContext context, ILogger<BeverageContextSeed> logger)
+        private IEnumerable<BeverageStyle> GetBeverageStylesFromFile(BeverageContext context, ILogger<BeverageContextSeed> logger)
         {
-            string csvFileBeverageStyles = Path.Combine(contentRootPath, SetupDataFilePath, "BeverageStyles.csv");
+            string csvFileBeverageStyles = ResourceHelper.GetManifestResourceAsString($"{BeverageDataNameSpace}.BeverageStyles.csv");
 
             string[] csvheaders = null;
             try
@@ -165,7 +164,7 @@
 
             var beverageTypeIdLookup = context.BeverageTypes.ToDictionary(ct => ct.Name, ct => ct.Id);
 
-            return File.ReadAllLines(csvFileBeverageStyles)
+            return csvFileBeverageStyles.SplitCsvRows()
                         .Skip(1) // skip header row
                         .Select(row => Regex.Split(row, ColumnRegexPattern) )
                         .SelectTry(column => this.CreateBeverageStyle(column, csvheaders, beverageTypeIdLookup))
@@ -173,15 +172,15 @@
                         .Where(x => x != null);
         }
 
-        private IEnumerable<Beverage> GetBeveragesFromFile(string contentRootPath, BeverageContext context, ILogger<BeverageContextSeed> logger)
+        private IEnumerable<Beverage> GetBeveragesFromFile(BeverageContext context, ILogger<BeverageContextSeed> logger)
         {
-            string csvFileBeverageStyles = Path.Combine(contentRootPath, SetupDataFilePath, "Beverages.csv");
+            string csvFileBeverages = ResourceHelper.GetManifestResourceAsString($"{BeverageDataNameSpace}.Beverages.csv");
 
             string[] csvheaders = null;
             try
             {
                 string[] requiredHeaders = { "name", "description", "alcoholpercent", "volume", "url", "beveragestylename", "beveragetypename", "manufacturername" };
-                csvheaders = this.GetHeaders(csvFileBeverageStyles, requiredHeaders );
+                csvheaders = this.GetHeaders(csvFileBeverages, requiredHeaders );
             }
             catch (Exception ex)
             {
@@ -192,7 +191,7 @@
             var beverageStyleIdLookup = context.BeverageStyles.ToDictionary(ct => ct.Name, ct => ct.Id);
             var manufacturerIdLookup = context.Manufacturers.ToDictionary(ct => ct.Name, ct => ct.Id);
 
-            return File.ReadAllLines(csvFileBeverageStyles)
+            return csvFileBeverages.SplitCsvRows()
                 .Skip(1) // skip header row
                 .Select(row => Regex.Split(row, ColumnRegexPattern) )
                 .SelectTry(column => this.CreateBeverage(column, csvheaders, beverageTypeIdLookup, beverageStyleIdLookup, manufacturerIdLookup, logger))
@@ -293,7 +292,7 @@
 
         private string[] GetHeaders(string csvfile, string[] requiredHeaders, string[] optionalHeaders = null)
         {
-            string[] csvheaders = File.ReadLines(csvfile).First().ToLowerInvariant().Split(',');
+            string[] csvheaders = csvfile.GetHeaderRow().ToLowerInvariant().Split(',');
 
             if (csvheaders.Count() < requiredHeaders.Count())
             {

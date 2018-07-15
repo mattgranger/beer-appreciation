@@ -1,4 +1,4 @@
-﻿namespace BeerAppreciation.Core.Data.Paging
+﻿namespace Core.Shared.Paging
 {
     using System.Collections.Generic;
 

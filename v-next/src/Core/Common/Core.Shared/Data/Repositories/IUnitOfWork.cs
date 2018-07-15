@@ -1,4 +1,4 @@
-﻿namespace Core.Shared.Data
+﻿namespace Core.Shared.Data.Repositories
 {
     using System.Threading.Tasks;
 

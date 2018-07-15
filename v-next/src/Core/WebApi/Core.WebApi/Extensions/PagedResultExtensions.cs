@@ -1,6 +1,6 @@
 ﻿namespace BeerAppreciation.Core.WebApi.Extensions
 {
-    using Data.Paging;
+    using global::Core.Shared.Paging;
     using Models;
 
     public static class PagedResultExtensions
