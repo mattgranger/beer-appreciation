@@ -1,6 +1,6 @@
 ﻿namespace Core.Shared.Settings
 {
-    public interface IEventIntegrationSetting
+    public interface IEventIntegrationSettings
     {
         string SubscriptionClientName { get; set; }
 

@@ -16,6 +16,15 @@ services:
       - sql.data
       - rabbitmq
 
+  beverage.api:
+    image: beerappreciation/beverage.api:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/Services/Beverages/Beverage.API/Dockerfile
+    depends_on:
+      - sql.data
+      - rabbitmq
+
   identity.api:
     image: beerappreciation/identity.api:${TAG:-latest}
     build:
@@ -27,10 +36,3 @@ services:
     build:
       context: .
       dockerfile: src/Services/Events/EventManagement.API/Dockerfile
-
-  beverage.api:
-    image: beerappreciation/beverage.api:${TAG:-latest}
-    build:
-      context: .
-      dockerfile: src/Services/Beverage.API/Dockerfile
-

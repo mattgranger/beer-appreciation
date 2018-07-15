@@ -1,6 +1,6 @@
 ﻿namespace Core.Shared.Settings
 {
-    public interface IDatabaseSetting
+    public interface IDatabaseSettings
     {
         string ConnectionString { get;set; }
     }

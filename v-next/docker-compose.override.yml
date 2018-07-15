@@ -33,6 +33,24 @@ services:
       - "5101:80"   # Important: In a production environment your should remove the external port (5101) kept here for microservice debugging purposes. 
                     # The API Gateway redirects and access through the internal port (80).
 
+  beverage.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - ConnectionString=${BEERAPPRECIATION_AZURE_CATALOG_DB:-Server=sql.data;Database=BeerAppreciation.BeverageDb;User Id=sa;Password=Pass@word}
+      - EventBusConnection=${BEERAPPRECIATION_AZURE_SERVICE_BUS:-rabbitmq}
+      - EventBusUserName=${BEERAPPRECIATION_SERVICE_BUS_USERNAME}
+      - EventBusPassword=${BEERAPPRECIATION_SERVICE_BUS_PASSWORD}         
+      - AzureStorageAccountName=${BEERAPPRECIATION_AZURE_STORAGE_CATALOG_NAME}
+      - AzureStorageAccountKey=${BEERAPPRECIATION_AZURE_STORAGE_CATALOG_KEY}
+      - AzureServiceBusEnabled=False
+      - AzureStorageEnabled=False
+      - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
+      - OrchestratorType=${ORCHESTRATOR_TYPE}
+    ports:
+      - "5102:80"   # Important: In a production environment your should remove the external port (5101) kept here for microservice debugging purposes. 
+                    # The API Gateway redirects and access through the internal port (80).
+
   identity.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -47,19 +65,10 @@ services:
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
     ports:
-      - "5105:80"   
-
+      - "5105:80"
 
   eventmanagement.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "80"
-
-
-  beverage.api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "80"
-

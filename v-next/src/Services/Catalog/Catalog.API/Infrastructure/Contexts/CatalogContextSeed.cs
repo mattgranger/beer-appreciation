@@ -7,8 +7,7 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
-    using BeerAppreciation.Core.WebApi.Extensions;
-    using Core.Shared.Extensions;
+    using BeerAppreciation.Services.Catalog.API.Infrastructure.Extensions;
     using Domain;
     using Polly;
     using Microsoft.AspNetCore.Hosting;

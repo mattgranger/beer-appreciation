@@ -1,6 +1,8 @@
 ﻿namespace BeerAppreciation.Beverage.Domain.Services
 {
-    public interface IManufacturerService
+    using Core.Data.Repositories;
+
+    public interface IManufacturerService : IGenericRepository<Beverage, int>
     {
     }
 }

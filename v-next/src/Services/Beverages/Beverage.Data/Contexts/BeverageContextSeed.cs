@@ -7,9 +7,9 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
-    using Core.Shared.Extensions;
     using Domain;
-    using Microsoft.Extensions.Hosting;
+    using global::Core.Shared.Extensions;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Logging;
     using Polly;
 

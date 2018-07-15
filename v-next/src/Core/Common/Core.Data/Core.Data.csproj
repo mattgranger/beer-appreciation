@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>BeerAppreciation.Core.Data</RootNamespace>
+    <AssemblyName>BeerAppreciation.Core.Data</AssemblyName>
+  </PropertyGroup>
+
+</Project>
