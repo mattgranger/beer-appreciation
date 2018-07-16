@@ -7,9 +7,9 @@
     using Microsoft.Extensions.Logging;
 
     [Route("api/v1/[controller]")]
-    public class ManufacturersController : EntityController<Manufacturer, int>
+    public class BeverageStylesController : EntityController<BeverageStyle, int>
     {
-        public ManufacturersController(IEntityService<Manufacturer, int> entityService, ILogger<EntityController<Manufacturer, int>> logger) : base(entityService, logger)
+        public BeverageStylesController(IEntityService<BeverageStyle, int> entityService, ILogger<EntityController<BeverageStyle, int>> logger) : base(entityService, logger)
         {
         }
     }

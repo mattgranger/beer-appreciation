@@ -23,7 +23,8 @@
 
             builder.RegisterAssemblyTypes(dataAssembly)
                 .Where(t => t.Name.EndsWith("Repository"))
-                .AsImplementedInterfaces();
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
 
             builder.RegisterGeneric(typeof(EntityRepository<,>))
                 .As(typeof(IEntityRepository<,>))
@@ -36,7 +37,8 @@
 
             builder.RegisterAssemblyTypes(serviceAssembly)
                 .Where(t => t.Name.EndsWith("Service"))
-                .AsImplementedInterfaces();
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
 
             builder.RegisterGeneric(typeof(EntityService<,>))
                 .As(typeof(IEntityService<,>))

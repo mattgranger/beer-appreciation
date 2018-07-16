@@ -1,12 +1,14 @@
 ﻿namespace BeerAppreciation.Beverage.Domain.Services
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Core.Shared.Data.Repositories;
     using Core.Shared.Data.Services;
     using global::Core.Shared.Paging;
+    using Microsoft.EntityFrameworkCore;
 
-    public class EntityService<T, TKey> : IEntityService<T, TKey>
+    public class EntityService<T, TKey> : IEntityService<T, TKey> where T : class
     {
         private readonly IEntityRepository<T, TKey> repository;
 
@@ -14,6 +16,8 @@
         {
             this.repository = repository;
         }
+
+        public DbSet<T> EntitySet => this.repository.EntitySet;
 
         public async Task<IList<T>> GetList()
         {

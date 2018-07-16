@@ -2,11 +2,13 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
     using Paging;
     using Repositories;
 
-    public interface IEntityService<T, TKey> : IUnitOfWork
+    public interface IEntityService<T, TKey> : IUnitOfWork where T : class
     {
+        DbSet<T> EntitySet { get; }
         Task<IList<T>> GetList();
         Task<IPagedList<T>> GetPagedList(int pageIndex, int pageSize);
         Task<T> GetById(TKey id);

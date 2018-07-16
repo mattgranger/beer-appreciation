@@ -1,71 +1,17 @@
 ﻿namespace BeerAppreciation.Beverage.API.Controllers
 {
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Threading.Tasks;
-    using Core.WebApi.Extensions;
-    using Core.WebApi.Models;
+    using Core.WebApi.Controllers;
     using Domain;
-    using Domain.Services;
+    using global::Core.Shared.Data.Services;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class BeverageTypesController : ControllerBase
+    public class BeverageTypesController : EntityController<BeverageType, int>
     {
-        private readonly IBeverageTypeService beverageTypeService;
-
-        public BeverageTypesController(IBeverageTypeService beverageTypeService)
+        public BeverageTypesController(IEntityService<BeverageType, int> entityService, ILogger<EntityController<BeverageType, int>> logger) : base(entityService, logger)
         {
-            this.beverageTypeService = beverageTypeService;
-        }
-
-        // GET api/v1/[controller]/?pageSize=3&pageIndex=10]
-        [HttpGet]
-        [ProducesResponseType(typeof(PagedResultModel<BeverageType>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(IEnumerable<BeverageType>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Get([FromQuery]int pageIndex = 0, [FromQuery]int pageSize = 10)
-        {
-            var pagedList = await this.beverageTypeService.GetPagedList(pageIndex, pageSize);
-
-            return this.Ok(pagedList.ToPagedResultModel());
-        }
-
-        [HttpGet]
-        [Route("{id:int}")]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(BeverageType), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetById(int id, string includes = "")
-        {
-            if (id <= 0)
-            {
-                return this.BadRequest();
-            }
-
-            var item = await this.beverageTypeService.GetById(id);
-
-            if (item != null)
-            {
-                return this.Ok(item);
-            }
-
-            return this.NotFound();
-        }
-
-        // GET api/v1/[controller]/{id}/styles
-        [HttpGet]
-        [Route("{id}/styles")]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(IEnumerable<BeverageStyle>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetBeverageStyles(int id)
-        {
-            var beverageType = await this.beverageTypeService.GetById(id);
-            if (beverageType == null)
-            {
-                return this.NotFound();
-            }
-
-            return this.Ok(beverageType.BeverageStyles);
         }
     }
 }

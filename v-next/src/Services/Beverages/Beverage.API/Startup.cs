@@ -5,15 +5,18 @@
     using Autofac.Extensions.DependencyInjection;
     using Core.EventBus.Abstractions;
     using Core.WebApi.Startup;
-    using Data.Contexts;
     using Data.Extensions;
+    using Domain;
     using Infrastructure.AutofacModules;
     using Installers;
+    using Microsoft.AspNet.OData.Builder;
+    using Microsoft.AspNet.OData.Extensions;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using Microsoft.OData.Edm;
 
     public class Startup
     {
@@ -35,6 +38,9 @@
                 .AddSwagger("Beverage API", "v1", "The Beer Appreciation Beverage Microservice API.")
                 .AddBeverageDependencies(this.Configuration);
 
+            services
+                .AddOData();
+
             var container = new ContainerBuilder();
             container.Populate(services);
 
@@ -47,12 +53,17 @@
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            if (env.IsDevelopment())
+            //Enabling OData routing.
+            app.UseMvc(routeBuilder =>
             {
-                app.UseDeveloperExceptionPage();
-            }
+                routeBuilder.MapODataServiceRoute(
+                    "ODataRoute", 
+                    "odata",
+                    GetBeverageModel());
+                routeBuilder.MapRoute("default", "api/v1/{controller}");
+                routeBuilder.EnableDependencyInjection();
+            });
 
-            app.UseMvc();
             app.ConfigureSwaggerWithUi();
 
             this.ConfigureEventBus(app);
@@ -61,6 +72,16 @@
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+        }
+
+        private static IEdmModel GetBeverageModel()
+        {
+            ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
+            builder.EntitySet<Beverage>("Beverages");
+            builder.EntitySet<BeverageType>("BeverageTypes");
+            builder.EntitySet<BeverageStyle>("BeverageStyles");
+            builder.EntitySet<Manufacturer>("Manufacturers");
+            return builder.GetEdmModel();
         }
     }
 }

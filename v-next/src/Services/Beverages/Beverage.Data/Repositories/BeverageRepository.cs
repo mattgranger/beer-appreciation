@@ -6,7 +6,7 @@
 
     public class BeverageRepository : EntityRepository<Beverage, int>, IBeverageRepository
     {
-        public BeverageRepository(IUnitOfWork<BeverageContext> unitOfWork) : base(unitOfWork)
+        public BeverageRepository(IUnitOfWork<BeverageContext> unitOfWork, IRepositoryFactory repositoryFactory) : base(unitOfWork, repositoryFactory)
         {
         }
     }
