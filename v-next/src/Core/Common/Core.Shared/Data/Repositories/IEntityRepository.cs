@@ -5,7 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using Paging;
 
-    public interface IEntityRepository<T, TKey> : IUnitOfWork where T : class
+    public interface IEntityRepository<T, TKey> where T : class
     {
         DbSet<T> EntitySet { get; }
         Task<IList<T>> GetList();
@@ -13,6 +13,6 @@
         Task<T> GetById(TKey id);
         Task<TKey> Insert(T entity);
         Task Update(T entity);
-        Task Delete(TKey id);
+        Task Delete(object id);
     }
 }

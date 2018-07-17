@@ -35,7 +35,6 @@
         public static IServiceCollection ConfigureDbContexts(this IServiceCollection services, IConfiguration configuration)
         {
             services
-                .AddUnitOfWork<BeverageContext>()
                 .AddDbContext<BeverageContext>(options =>
             {
                 options.UseSqlServer(configuration["ConnectionString"],

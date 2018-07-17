@@ -9,31 +9,23 @@
 
     public class EntityRepository<T, TKey> : IEntityRepository<T, TKey> where T : BaseEntity<TKey>
     {
-        private readonly IUnitOfWork<BeverageContext> unitOfWork;
-        private readonly IRepositoryFactory repositoryFactory;
+        private readonly BeverageContext beverageContext;
 
-        public EntityRepository(IUnitOfWork<BeverageContext> unitOfWork, IRepositoryFactory repositoryFactory)
+        public EntityRepository(BeverageContext beverageContext)
         {
-            this.unitOfWork = unitOfWork;
-            this.repositoryFactory = repositoryFactory;
+            this.beverageContext = beverageContext;
         }
 
-        public DbSet<T> EntitySet => this.unitOfWork.DbContext.Set<T>();
-
-        public async Task SaveChanges(bool ensureAutoHistory = false)
-        {
-            await this.unitOfWork.SaveChangesAsync(ensureAutoHistory);
-        }
+        public DbSet<T> EntitySet => this.beverageContext.Set<T>();
 
         public async Task<IList<T>> GetList()
         {
-            var pagedResult = await this.repositoryFactory.GetRepository<T>().GetPagedListAsync().ConfigureAwait(false);
-            return pagedResult.Items;
+            return await this.EntitySet.AsNoTracking().ToListAsync();
         }
 
-        public async Task<global::Core.Shared.Paging.IPagedList<T>> GetPagedList(int pageIndex = 0, int pageSize = 100)
+        public async Task<Core.Shared.Paging.IPagedList<T>> GetPagedList(int pageIndex = 0, int pageSize = 100)
         {
-            var pagedList = await this.repositoryFactory.GetRepository<T>().GetPagedListAsync(pageIndex:pageIndex, pageSize:pageSize).ConfigureAwait(false);
+            var pagedList = await this.EntitySet.ToPagedListAsync(pageIndex:pageIndex, pageSize:pageSize).ConfigureAwait(false);
             return new global::Core.Shared.Paging.PagedList<T>(pageIndex, pageSize, pagedList.TotalCount, pagedList.Items);
         }
 
@@ -44,29 +36,26 @@
 
         public async Task<TKey> Insert(T entity)
         {
-            var repo = this.unitOfWork.GetRepository<T>();
-            await repo.InsertAsync(entity);
-            await this.unitOfWork.SaveChangesAsync();
+            await this.beverageContext.AddAsync(entity);
+            await this.beverageContext.SaveChangesAsync();
             return entity.Id;
         }
 
         public async Task Update(T entity)
         {
-            var repo = this.unitOfWork.GetRepository<T>();
-            repo.Update(entity);
-            await this.unitOfWork.SaveChangesAsync();
+            this.beverageContext.Update(entity);
+            await this.beverageContext.SaveChangesAsync();
         }
 
-        public async Task Delete(TKey id)
+        public async Task Delete(object id)
         {
-            var repo = this.unitOfWork.GetRepository<T>();
-            repo.Delete(id);
-            await this.unitOfWork.SaveChangesAsync();
+            this.beverageContext.Remove(id);
+            await this.beverageContext.SaveChangesAsync();
         }
 
         private async Task<T> GetEntityById(TKey id)
         {
-            return await this.repositoryFactory.GetRepository<T>().GetFirstOrDefaultAsync(x => x, x => x.Id.Equals(id));
+            return await this.EntitySet.FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
     }
 }

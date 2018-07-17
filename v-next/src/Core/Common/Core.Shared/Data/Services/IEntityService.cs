@@ -6,7 +6,7 @@
     using Paging;
     using Repositories;
 
-    public interface IEntityService<T, TKey> : IUnitOfWork where T : class
+    public interface IEntityService<T, TKey> where T : class
     {
         DbSet<T> EntitySet { get; }
         Task<IList<T>> GetList();

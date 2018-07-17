@@ -1,7 +1,6 @@
 ﻿namespace BeerAppreciation.Beverage.Domain.Services
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using Core.Shared.Data.Repositories;
     using Core.Shared.Data.Services;
@@ -48,11 +47,6 @@
         public async Task Delete(TKey id)
         {
             await this.repository.Delete(id);
-        }
-
-        public async Task SaveChanges(bool ensureAutoHistory = false)
-        {
-            await this.repository.SaveChanges(ensureAutoHistory);
         }
     }
 }
