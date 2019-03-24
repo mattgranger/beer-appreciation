@@ -1,0 +1,14 @@
+<div class="sidebar-container">
+    <mat-nav-list>
+        <mat-list-item *ngFor="let link of navItems">
+            <mat-icon class="menu-icon">{{link.icon}}</mat-icon>
+            <a routerLinkActive
+              #routerLinkActiveInstance="routerLinkActive"
+              [attr.tabindex]="routerLinkActiveInstance.isActive ? 0 : -1"
+              [routerLink]="[link.route]">
+              {{link.name}}
+            </a>
+            <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-nav-list>
+</div>

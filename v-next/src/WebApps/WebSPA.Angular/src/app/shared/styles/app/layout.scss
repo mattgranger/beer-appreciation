@@ -1,0 +1,63 @@
+@import "./header";
+@import "./sidebar";
+@import "./footer";
+
+.layout-container {
+    display:absolute;
+    background:green;
+    top: 0;
+    bottom: 0;
+  }
+
+  .layout-sidenav-container {
+    position: absolute;
+    background:red;
+    height: 100%;
+    width:100%;
+    top: 0;
+    bottom: 0;
+
+    .layout-sidebar {
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+        border-right: #cccccc;
+      }
+
+      .layout-offsidebar {
+        top: 0;
+        bottom: 0;
+              padding:10px;
+          width: 200px;
+        }
+
+    .layout-content {
+        padding:10px;
+        min-height: 100%;
+        min-width: 100%;
+        height:100%;
+        width:100%;
+        overflow:hidden;
+    }
+
+    .layout-footer {
+
+    }
+  }
+
+  .layout-is-mobile {
+    // position: fixed;
+    /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+    z-index: 2;
+    background:red;
+
+    .layout-sidenav-container {
+      margin-top:0;
+    }
+  }
+
+  @media (max-width: 599px) {
+
+  }

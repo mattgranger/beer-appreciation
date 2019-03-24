@@ -1,0 +1,31 @@
+.header-container {
+    .mat-toolbar.header-toolbar {
+        .mat-icon {
+          cursor: pointer;
+        }
+      
+        .toolbar-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+        }
+      }
+
+      .app-logo {
+        height: 26px;
+        margin: 0 4px 3px 0;
+        vertical-align: middle;
+      }
+      
+      h1 {
+        font-size: 20px;
+      }
+}
+
+.layout-is-mobile .mat-toolbar.header-toolbar {
+  // position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+  background:red;
+}
