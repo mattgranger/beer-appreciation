@@ -13,6 +13,7 @@ import { Directionality } from '@angular/cdk/bidi';
 import { LayoutDirectionality } from './core/layout/layout-directionality';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { LoginComponent } from './pages/login/login.component';
   ],
   imports: [
     BrowserModule,
+    FlexLayoutModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,

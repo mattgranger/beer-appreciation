@@ -14,3 +14,24 @@
 .demo-unicorn-dark-theme {
   @include angular-material-theme($dark-theme);
 }
+
+html {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  min-height: 100%;
+}
+
+body, html {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  margin: 0;
+
+  // Helps fonts on OSX looks more consistent with other systems
+  // Isn't currently in button styles due to performance concerns
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}

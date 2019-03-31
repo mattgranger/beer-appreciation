@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, Inject, Output, EventEmitter, ViewEncapsulation, ViewChild } from '@angular/core';
 import { LayoutDirectionality } from '../layout-directionality';
 import { RippleOptions } from 'src/app/shared/ripple-options';
 import { Directionality } from '@angular/cdk/bidi';
@@ -15,8 +15,7 @@ export class HeaderComponent implements OnInit {
   @Output() toggleSidebar = new EventEmitter();
   @Output() toggleOffsidebar = new EventEmitter();
 
-  constructor(public rippleOptions: RippleOptions,
-              @Inject(Directionality) public dir: LayoutDirectionality) { }
+  constructor(public rippleOptions: RippleOptions, @Inject(Directionality) public dir: LayoutDirectionality) { }
 
   ngOnInit() {
   }

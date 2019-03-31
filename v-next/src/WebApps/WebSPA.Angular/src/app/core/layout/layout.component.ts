@@ -1,11 +1,13 @@
 import { Directionality} from '@angular/cdk/bidi';
 import { OverlayContainer} from '@angular/cdk/overlay';
-import { Component, ElementRef, ViewEncapsulation, ChangeDetectorRef, Inject, OnDestroy} from '@angular/core';
+import { Component, ElementRef, ViewEncapsulation, ChangeDetectorRef, Inject, OnDestroy, ViewChild} from '@angular/core';
 import { RippleOptions } from '../../shared/ripple-options';
 import { LayoutDirectionality } from './layout-directionality';
 import { SidebarOptions } from './sidebar-options';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @Component({
   selector: 'app-layout',
@@ -16,7 +18,7 @@ export class LayoutComponent implements OnDestroy {
   dark = false;
   sideOpened = true;
   offsideOpened = false;
-  sidebarOptions = new SidebarOptions(64, false, 64);
+  sidebarOptions = new SidebarOptions(64, false, 0);
   offsidebarOptions = new SidebarOptions(0, false, 0);
   mobileQuery: MediaQueryList;
   private mobileQueryListener: () => void;

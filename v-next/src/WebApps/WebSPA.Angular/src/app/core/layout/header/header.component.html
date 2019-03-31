@@ -1,27 +1,25 @@
-<div class='header-container'>
     <mat-toolbar color="primary" role="heading" class="header-toolbar">
-        <button mat-icon-button (click)="onToggleSidebar()">
-          <mat-icon>menu</mat-icon>
-        </button>
-        <div class="toolbar-container">
-            <span class="mat-button-wrapper">
-              <img alt="angular" class="app-logo" src="https://material.angular.io/assets/img/homepage/angular-white-transparent.svg">
-              <span>Beer Appreciation</span>
-            </span>
-          <div>
-            <button mat-icon-button (click)="onToggleFullscreen()" title="Toggle fullscreen">
-              <mat-icon>fullscreen</mat-icon>
+      <button mat-icon-button (click)="onToggleSidebar()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <div class="toolbar-container">
+          <span class="mat-button-wrapper">
+            <img alt="angular" class="app-logo" src="https://material.angular.io/assets/img/homepage/angular-white-transparent.svg">
+            <span>Beer Appreciation</span>
+          </span>
+        <div>
+          <button mat-icon-button (click)="onToggleFullscreen()" title="Toggle fullscreen">
+            <mat-icon>fullscreen</mat-icon>
+          </button>
+          <button mat-button (click)="onToggleTheme()">
+            <mat-icon>opacity</mat-icon>
+          </button>
+          <button mat-button (click)="rippleOptions.disabled = !rippleOptions.disabled">
+            <mat-icon>offline_bolt</mat-icon>
+          </button>
+          <button mat-icon-button (click)="onToggleOffsidebar()" title="Toggle offsidebar">
+              <mat-icon>settings</mat-icon>
             </button>
-            <button mat-button (click)="onToggleTheme()">
-              <mat-icon>opacity</mat-icon>
-            </button>
-            <button mat-button (click)="rippleOptions.disabled = !rippleOptions.disabled">
-              <mat-icon>offline_bolt</mat-icon>
-            </button>
-            <button mat-icon-button (click)="onToggleOffsidebar()" title="Toggle offsidebar">
-                <mat-icon>settings</mat-icon>
-              </button>
-          </div>
         </div>
-    </mat-toolbar>
-</div>
+      </div>
+  </mat-toolbar>

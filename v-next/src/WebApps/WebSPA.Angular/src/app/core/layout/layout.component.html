@@ -1,17 +1,17 @@
-<div class="layout-container" [class.layout-is-mobile]="isMobile()">
-    <app-header (toggleFullscreen)="toggleFullscreen()"
-    (toggleTheme)="toggleTheme()"
-    (toggleSidebar)="toggleSidebar()"
-    (toggleOffsidebar)="toggleOffsidebar()"></app-header>
+<app-header (toggleFullscreen)="toggleFullscreen()"
+(toggleTheme)="toggleTheme()"
+(toggleSidebar)="toggleSidebar()"
+(toggleOffsidebar)="toggleOffsidebar()"
+class="layout-header"></app-header>
     <mat-sidenav-container class="layout-sidenav-container">
         <mat-sidenav role="navigation" 
-        #sidenav
-        [mode]="getSidebarMode()"
-        [(opened)]="sideOpened"
-        [fixedInViewport]="sidebarOptions.fixed"
-        [fixedTopGap]="sidebarOptions.top"
-        [fixedBottomGap]="sidebarOptions.bottom"
-        class="layout-sidebar">
+            #sidenav
+            [mode]="getSidebarMode()"
+            [(opened)]="sideOpened"
+            [fixedInViewport]="sidebarOptions.fixed"
+            [fixedTopGap]="sidebarOptions.top"
+            [fixedBottomGap]="sidebarOptions.bottom"
+            class="layout-sidebar">
           <app-sidebar [navItems]="navItems"></app-sidebar>
         </mat-sidenav>
         <mat-sidenav 
@@ -22,9 +22,10 @@
             class="layout-offsidebar">
             <app-offsidebar></app-offsidebar>
         </mat-sidenav>
-        <mat-sidenav-content class="layout-content">
-            <router-outlet></router-outlet>
+        <mat-sidenav-content>
+            <main>
+                <router-outlet></router-outlet>
+            </main>
         </mat-sidenav-content>
     </mat-sidenav-container>
-    <app-footer class="layout-footer"></app-footer>
-</div>
+
