@@ -10,18 +10,17 @@
         {
             services.AddSwaggerGen(options =>
             {
-                options.DescribeAllEnumsAsStrings();
-                options.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Title = "BeerAppreciation - Catalog HTTP API",
                     Version = "v1",
                     Description = "The Catalog Microservice HTTP API. All beverages and associated domain can be found here",
-                    TermsOfService = "Terms Of Service - Be Cool"
+                    //TermsOfService = "Terms Of Service - Be Cool"
                 });
             });
         }
 
-        public static void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSwagger()
                 .UseSwaggerUI(c =>

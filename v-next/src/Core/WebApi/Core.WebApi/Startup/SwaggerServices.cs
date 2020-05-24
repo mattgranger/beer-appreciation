@@ -9,13 +9,12 @@
         {
             services.AddSwaggerGen(options =>
             {
-                options.DescribeAllEnumsAsStrings();
-                options.SwaggerDoc(version, new Swashbuckle.AspNetCore.Swagger.Info
+                options.SwaggerDoc(version, new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Title = title,
                     Version = version,
                     Description = description,
-                    TermsOfService = termsOfService
+                    //TermsOfService = termsOfService
                 });
             });
 

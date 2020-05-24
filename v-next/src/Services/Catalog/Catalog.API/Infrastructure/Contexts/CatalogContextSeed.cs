@@ -13,13 +13,15 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
+    using System.Data.Common;
+    using Polly.Retry;
 
     public class CatalogContextSeed
     {
         public const string SetupDataFilePath = "Infrastructure/Setup";
         public const string ColumnRegexPattern = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
 
-        public async Task SeedAsync(CatalogContext context, IHostingEnvironment env, IOptions<CatalogSettings> settings, ILogger<CatalogContextSeed> logger)
+        public async Task SeedAsync(CatalogContext context, IWebHostEnvironment env, IOptions<CatalogSettings> settings, ILogger<CatalogContextSeed> logger)
         {
             var policy = this.CreatePolicy(logger, nameof(CatalogContextSeed));
 
@@ -322,9 +324,9 @@
             return csvheaders;
         }
 
-        private Policy CreatePolicy(ILogger<CatalogContextSeed> logger, string prefix,int retries = 3)
+        private AsyncRetryPolicy CreatePolicy(ILogger<CatalogContextSeed> logger, string prefix,int retries = 3)
         {
-            return Policy.Handle<SqlException>().
+            return Policy.Handle<DbException>().
                 WaitAndRetryAsync(
                     retryCount: retries,
                     sleepDurationProvider: retry => TimeSpan.FromSeconds(5),

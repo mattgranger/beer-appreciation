@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F03D509E-7464-4493-B2C7-7D0DA9D89254}"
 EndProject
@@ -30,6 +30,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{224A7E3E-CB5A-458D-9808-A10F60AD46EA}"
 	ProjectSection(SolutionItems) = preProject
 		.env = .env
+		global.json = global.json
 		NuGet.config = NuGet.config
 	EndProjectSection
 EndProject

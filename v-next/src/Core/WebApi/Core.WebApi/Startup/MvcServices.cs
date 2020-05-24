@@ -14,7 +14,7 @@
             {
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
             })
-            .AddJsonOptions(options => {
+            .AddNewtonsoftJson(options => {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             })

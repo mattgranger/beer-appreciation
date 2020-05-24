@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Arch.EntityFrameworkCore.UnitOfWork.Collections;
     using Contexts;
     using Core.Shared.Data.Repositories;
     using global::Core.Shared.Domain;

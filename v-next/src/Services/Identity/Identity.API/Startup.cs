@@ -15,6 +15,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Models;
     using Services;
@@ -100,12 +101,11 @@
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggingBuilder loggerFactory)
         {
-            loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
+            loggerFactory.AddConsole();
             loggerFactory.AddDebug();
             loggerFactory.AddAzureWebAppDiagnostics();
-            loggerFactory.AddApplicationInsights(app.ApplicationServices, LogLevel.Trace);
 
             if (env.IsDevelopment())
             {
@@ -120,7 +120,7 @@
             var pathBase = this.Configuration["PATH_BASE"];
             if (!string.IsNullOrEmpty(pathBase))
             {
-                loggerFactory.CreateLogger("init").LogDebug($"Using PATH BASE '{pathBase}'");
+                //loggerFactory.CreateLogger("init").LogDebug($"Using PATH BASE '{pathBase}'");
                 app.UsePathBase(pathBase);
             }
 
@@ -158,7 +158,7 @@
             if (orchestratorType?.ToUpper() == "K8S")
             {
                 // Enable K8s telemetry initializer
-                services.EnableKubernetes();
+                services.AddApplicationInsightsKubernetesEnricher();
             }
             if (orchestratorType?.ToUpper() == "SF")
             {

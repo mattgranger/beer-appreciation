@@ -1,11 +1,11 @@
 ﻿namespace Microsoft.AspNetCore.Hosting
 {
-    using EntityFrameworkCore;
-    using Extensions.DependencyInjection;
-    using Extensions.Logging;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
     using Polly;
     using System;
-    using System.Data.SqlClient;
+    using System.Data.Common;
 
     public static class IWebHostExtensions
     {
@@ -23,7 +23,7 @@
                 {
                     logger.LogInformation($"Migrating database associated with context {typeof(TContext).Name}");
 
-                    var retry = Policy.Handle<SqlException>()
+                    var retry = Policy.Handle<DbException>()
                          .WaitAndRetry(new TimeSpan[]
                          {
                              TimeSpan.FromSeconds(3),

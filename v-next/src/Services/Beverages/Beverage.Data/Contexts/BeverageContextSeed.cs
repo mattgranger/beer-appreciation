@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Common;
     using System.Data.SqlClient;
     using System.IO;
     using System.Linq;
@@ -13,6 +14,7 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Logging;
     using Polly;
+    using Polly.Retry;
 
     public class BeverageContextSeed
     {
@@ -318,9 +320,9 @@
             return csvheaders;
         }
 
-        private Policy CreatePolicy(ILogger<BeverageContextSeed> logger, string prefix,int retries = 3)
+        private AsyncRetryPolicy CreatePolicy(ILogger<BeverageContextSeed> logger, string prefix,int retries = 3)
         {
-            return Policy.Handle<SqlException>().
+            return Policy.Handle<DbException>().
                 WaitAndRetryAsync(
                     retryCount: retries,
                     sleepDurationProvider: retry => TimeSpan.FromSeconds(5),
